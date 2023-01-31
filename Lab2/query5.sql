@@ -1,5 +1,5 @@
 SELECT
-    e1.highwayNum,
+    DISTINCT e1.highwayNum,
     e1.exitNum AS firstExitNum,
     e2.exitnum AS secondExitNum,
     (e2.mileMarker - e1.mileMarker) AS exitDistance

@@ -1,8 +1,9 @@
 SELECT
-    DISTINCT p.cameraID AS theCameraID,
+    -- DISTINCT 
+    p.cameraID AS theCameraID,
     p.photoTimestamp AS theTimestamp,
-    o.name as theOwnerName,
-    o.address as theOwnerAddress
+    o.name AS theOwnerName,
+    o.address AS theOwnerAddress
 FROM
     Photos p,
     Owners o,
@@ -10,17 +11,16 @@ FROM
     Vehicles v,
     Highways h
 WHERE
-    p.cameraID = c.cameraID
-    AND c.isCameraWorking = TRUE
-    AND DATE(p.photoTimestamp) = '2022-12-01'
-    AND p.vehicleState = v.ownerState
+    c.isCameraWorking = TRUE
+    AND p.cameraID = c.cameraID
+    AND DATE(p.photoTimestamp) = DATE '2022-12-01'
     AND p.vehicleLicensePlate = v.vehicleLicensePlate
     AND (
         v.color = 'RE'
-        or v.color = 'GR'
+        OR v.color = 'GR'
     )
+    AND o.name LIKE '_o%'
     AND o.ownerState = v.ownerState
     AND o.ownerLicenseID = v.ownerLicenseID
-    AND o.name = '_o%'
     AND c.highwayNum = h.highwayNum
     AND h.speedLimit <= 65;
