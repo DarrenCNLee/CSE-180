@@ -1,5 +1,4 @@
 SELECT
-    -- DISTINCT 
     p.cameraID AS theCameraID,
     p.photoTimestamp AS theTimestamp,
     o.name AS theOwnerName,
