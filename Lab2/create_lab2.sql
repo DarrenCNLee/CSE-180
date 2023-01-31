@@ -12,14 +12,15 @@ CREATE TABLE Highways (
 );
 
 CREATE TABLE Exits (
-    highwayNum INT REFERENCES Highways UNIQUE,
+    highwayNum INT REFERENCES Highways,
     exitNum INT,
     description VARCHAR(60),
-    mileMarker NUMERIC(4, 1) NOT NULL UNIQUE,
+    mileMarker NUMERIC(4, 1) NOT NULL,
     exitCity VARCHAR(20),
     exitState CHAR(2),
     isExitOpen BOOL,
-    PRIMARY KEY (highwayNum, exitNum)
+    PRIMARY KEY (highwayNum, exitNum),
+    UNIQUE (highwayNum, mileMarker)
 );
 
 CREATE TABLE Interchanges (
@@ -43,11 +44,12 @@ CREATE TABLE Cameras (
 CREATE TABLE Owners (
     ownerState CHAR(2),
     ownerLicenseID CHAR(8),
-    name VARCHAR(60) UNIQUE,
-    address VARCHAR(60) UNIQUE,
+    name VARCHAR(60),
+    address VARCHAR(60),
     startDate DATE,
     expirationDate DATE,
-    PRIMARY KEY (ownerState, ownerLicenseID)
+    PRIMARY KEY (ownerState, ownerLicenseID),
+    UNIQUE (name, address)
 );
 
 CREATE TABLE Vehicles (
@@ -63,9 +65,14 @@ CREATE TABLE Vehicles (
 
 CREATE TABLE Photos (
     cameraID INT REFERENCES Cameras,
-    vehicleState CHAR(2) UNIQUE,
-    vehicleLicensePlate Char(7) UNIQUE,
-    photoTimestamp TIMESTAMP UNIQUE,
+    vehicleState CHAR(2),
+    vehicleLicensePlate Char(7),
+    photoTimestamp TIMESTAMP,
     FOREIGN KEY (vehicleState, vehicleLicensePlate) REFERENCES Vehicles,
-    PRIMARY KEY (cameraID, photoTimestamp)
+    PRIMARY KEY (cameraID, photoTimestamp),
+    UNIQUE (
+        vehicleState,
+        vehicleLicensePlate,
+        photoTimestamp
+    )
 );
