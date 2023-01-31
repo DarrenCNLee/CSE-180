@@ -12,7 +12,7 @@ FROM
 WHERE
     p.cameraID = c.cameraID
     AND c.isCameraWorking = TRUE
-    AND DATE(p.photoTimestamp) = DATE '2022-12-01'
+    AND DATE(p.photoTimestamp) = '2022-12-01'
     AND p.vehicleState = v.ownerState
     AND p.vehicleLicensePlate = v.vehicleLicensePlate
     AND (
