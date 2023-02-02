@@ -14,6 +14,7 @@ WHERE
     AND p.cameraID = c.cameraID
     AND DATE(p.photoTimestamp) = DATE '2022-12-01'
     AND p.vehicleLicensePlate = v.vehicleLicensePlate
+    AND p.vehicleState = v.vehicleState
     AND (
         v.color = 'RE'
         OR v.color = 'GR'
