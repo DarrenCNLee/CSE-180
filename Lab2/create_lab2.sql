@@ -1,5 +1,5 @@
 -- CSE 180 Winter 2023 Lab2 create which you must modify as described in Lab2 pdf
--- The following two lines are not needed i but they're useful.
+-- The following two lines are not needed, but they're useful.
 DROP SCHEMA Lab2 CASCADE;
 
 CREATE SCHEMA Lab2;
