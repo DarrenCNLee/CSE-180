@@ -1,5 +1,5 @@
 SELECT
-    DISTINCT i.highwayNum1 AS h1,
+    i.highwayNum1 AS h1,
     i.exitNum1 AS e1,
     i.highwayNum2 AS h2,
     i.exitNum2 AS e2
@@ -10,7 +10,9 @@ FROM
 WHERE
     ex1.isExitOpen = TRUE
     AND ex2.isExitOpen = TRUE
+    AND ex1.highwayNum = i.highwayNum1
     AND ex1.exitNum = i.exitNum1
+    AND ex2.highwayNum = i.highwayNum2
     AND ex2.exitNum = i.exitNum2
     AND ex1.description = ex2.description
     AND (
