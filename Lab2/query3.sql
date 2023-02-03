@@ -1,21 +1,17 @@
 SELECT
-    DISTINCT h.highwayNum,
+    h.highwayNum,
     h.length
 FROM
-    Highways h,
-    Cameras c
+    Highways h
 WHERE
     h.highwayNum NOT IN (
         SELECT
-            h2.highwayNum
+            c.highwayNum
         FROM
-            Highways h2,
-            Cameras c2
+            Cameras c
         WHERE
-            h2.highwayNum = c2.highwayNum
-            AND c2.isCameraWorking = TRUE
+            c.isCameraWorking = TRUE
     )
-    AND c.highwayNum = h.highwayNum
     AND h.length > 100
 ORDER BY
     h.length DESC;
