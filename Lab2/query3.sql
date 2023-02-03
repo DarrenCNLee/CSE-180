@@ -7,7 +7,7 @@ FROM
 WHERE
     h.highwayNum NOT IN (
         SELECT
-            h2.highWayNum
+            h2.highwayNum
         FROM
             Highways h2,
             Cameras c2
