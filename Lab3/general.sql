@@ -9,6 +9,7 @@ ADD
     CONSTRAINT interchangeHighways CHECK(highwayNum1 < highwayNum2);
 
 ALTER TABLE
+    Owners
 ADD
     CONSTRAINT startNullExpirationNull CHECK(
         startDate IS NOT NULL
