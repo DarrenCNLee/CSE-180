@@ -24,7 +24,7 @@ SET
     vehicleLicensePlate = pc.vehicleLicensePlate,
     vehicleState = 'CA'
 FROM
-    PhotoChange pc
+    PhotoChanges pc
 WHERE
     (pc.cameraID, pc.photoTimestamp) IN (
         SELECT
