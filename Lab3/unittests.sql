@@ -6,7 +6,7 @@ VALUES
 INSERT INTO
     Photos(vehicleState, vehicleLicensePlate)
 VALUES
-    ('ZZ', 'errorLicensePlate');
+    ('ZZ', 'zzPlate');
 
 INSERT INTO
     Photos(cameraID)
