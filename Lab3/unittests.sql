@@ -42,6 +42,7 @@ UPDATE
     Interchanges
 SET
     highwayNum1 = 1,
+    exitNum1 = 1
     highwayNum2 = 8,
     exitNum2 = 34
 FROM
