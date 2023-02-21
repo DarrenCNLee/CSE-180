@@ -43,7 +43,7 @@ UPDATE
 SET
     highwayNum1 = 1,
     highwayNum2 = 8,
-    exitNum1 = i.exitNum,
+    exitNum1 = i.exitNum1,
     exitNum2 = 34
 FROM
     Interchanges i
