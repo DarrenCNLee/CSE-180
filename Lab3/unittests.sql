@@ -43,7 +43,8 @@ UPDATE
 SET
     highwayNum1 = 1,
     highwayNum2 = 8,
-    exitNum1 = i.exitNum exitNum2 = 34
+    exitNum1 = i.exitNum,
+    exitNum2 = 34
 FROM
     Interchanges i
 WHERE
