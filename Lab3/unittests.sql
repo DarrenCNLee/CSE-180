@@ -44,7 +44,7 @@ SET
     highwayNum1 = 1,
     highwayNum2 = 8,
     exitNum1 = i.exitNum1,
-    exitNum2 = 34
+    exitNum2 = i.exitNum2
 FROM
     Interchanges i
 WHERE
