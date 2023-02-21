@@ -16,13 +16,13 @@ WHERE
             pho.cameraID,
             pho.photoTimestamp
         FROM
-            Photos ph
+            Photos pho
     );
 
 UPDATE
     Photos
 SET
-    vehicleLicensePlate = ph.vehicleLicensePlate,
+    vehicleLicensePlate = pc.vehicleLicensePlate,
     vehicleState = 'CA'
 FROM
     PhotoChange pc
@@ -32,7 +32,7 @@ WHERE
             pho.cameraID,
             pho.photoTimestamp
         FROM
-            Photos
+            Photos pho
     );
 
 COMMIT;
