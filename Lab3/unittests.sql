@@ -1,12 +1,27 @@
 INSERT INTO
-    Vehicles(ownerState, ownerLicenseID)
+    Vehicles(
+        vehicleState,
+        vehicleLicensePlate,
+        ownerState,
+        ownerLicenseID
+    )
 VALUES
-    ('ZZ', 'errorID');
+    ('a', 'b', 'ZZ', 'errorID');
 
 INSERT INTO
-    Photos(cameraID, vehicleState, vehicleLicensePlate)
+    Photos(
+        cameraID,
+        vehicleState,
+        vehicleLicensePlate,
+        photoTimestamp
+    )
 VALUES
-    (50, 'ZZ', 'zzPlate');
+    (
+        50,
+        'ZZ',
+        'zzPlate',
+        TIMESTAMP '2022-12-01 16:20:01'
+    );
 
 INSERT INTO
     Photos(cameraID)
