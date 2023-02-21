@@ -42,7 +42,7 @@ UPDATE
     Interchanges
 SET
     highwayNum1 = 1,
-    highwayNum2 = 2;
+    highwayNum2 = 8;
 
 UPDATE
     Interchanges
