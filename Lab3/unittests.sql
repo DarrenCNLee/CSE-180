@@ -24,9 +24,9 @@ VALUES
     );
 
 INSERT INTO
-    Photos(cameraID)
+    Photos(cameraID, photoTimestamp)
 VALUES
-    (999);
+    (999, TIMESTAMP '2022-12-01 16:20:01');
 
 UPDATE
     Exits
