@@ -12,7 +12,7 @@ WHERE
         SELECT
             m.highwayNum
         FROM
-            MisdirectedExitView
+            MisdirectedExitView m
     )
 GROUP BY
     h.highwayNum,
