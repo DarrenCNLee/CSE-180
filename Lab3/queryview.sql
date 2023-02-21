@@ -42,6 +42,7 @@ WHERE
     highwayNum = 280
     AND exitNum = 95;
 
+
 -- output of the query after the deletions:
 --  highwaynum | length | openmisdirectedexitcount
 -- ------------+--------+--------------------------
