@@ -13,7 +13,7 @@ FROM
 WHERE
     (pc.cameraID, pc.photoTimestamp) NOT IN (
         SELECT
-            pho.camerID,
+            pho.cameraID,
             pho.photoTimestamp
         FROM
             Photos ph
