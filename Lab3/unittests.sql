@@ -46,10 +46,10 @@ SET
 FROM
     Interchanges i
 WHERE
-    highwayNum1 = 1
-    AND exitNum1 = 1
-    AND highwayNum2 = 17
-    AND exitNum2 = 1;
+    i.highwayNum1 = 1
+    AND i.exitNum1 = 1
+    AND i.highwayNum2 = 17
+    AND i.exitNum2 = 1;
 
 UPDATE
     Interchanges
