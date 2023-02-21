@@ -42,21 +42,14 @@ UPDATE
     Interchanges
 SET
     highwayNum1 = 1,
-    highwayNum2 = 8,
-    exitNum1 = i.exitNum1,
-    exitNum2 = i.exitNum2
+    highwayNum2 = 8
 FROM
     Interchanges i
 WHERE
-    i.exitNum1 IN (
-        SELECT
-            i2.exitNum1
-        FROM
-            Interchanges i2
-        WHERE
-            i2.highwayNum1 = 1
-            AND i2.highwayNum2 = 8
-    );
+    highwayNum1 = 1
+    AND exitNum1 = 1
+    AND highwayNum2 = 17
+    AND exitNum2 = 1;
 
 UPDATE
     Interchanges
