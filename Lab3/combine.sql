@@ -6,7 +6,6 @@ SELECT
     pc.cameraID,
     NULL,
     pc.vehicleLicensePlate,
-    pc.vehicleLicensePlate,
     pc.photoTimestamp
 FROM
     PhotoChanges pc
