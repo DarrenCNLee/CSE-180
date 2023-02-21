@@ -1,17 +1,17 @@
 INSERT INTO
     Vehicles(ownerState, ownerLicenseID)
 VALUES
-    ('errorState', 'errorID');
+    ('ZZ', 'errorID');
 
 INSERT INTO
     Photos(vehicleState, vehicleLicensePlate)
 VALUES
-    ('errorState', 'errorLicensePlate');
+    ('ZZ', 'errorLicensePlate');
 
 INSERT INTO
     Photos(cameraID)
 VALUES
-    ('errorID');
+    (999);
 
 UPDATE
     Exits
