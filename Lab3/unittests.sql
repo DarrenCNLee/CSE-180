@@ -42,7 +42,7 @@ UPDATE
     Interchanges
 SET
     highwayNum1 = 55,
-    highwayNum2 = 280,
+    highwayNum2 = 280
 WHERE
     exitNum1 != 46
     AND exitNum1 != 1;
