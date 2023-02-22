@@ -41,11 +41,14 @@ SET
 UPDATE
     Interchanges
 SET
-    highwayNum1 = 55,
-    highwayNum2 = 280
+    highwayNum1 = 1,
+    highwayNum2 = 280,
+    exitNum2 = 95
 WHERE
-    exitNum1 != 46
-    AND exitNum1 != 1;
+    exitNum1 != 17
+    AND exitNum1 != 40
+    AND exitNum1 != 46
+    AND exitNum1 != 25;
 
 UPDATE
     Interchanges
