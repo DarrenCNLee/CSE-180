@@ -10,7 +10,7 @@ ALTER TABLE
     Photos
 ADD 
     CONSTRAINT VehicleStateAndLicensePlateFK
-    FOREIGN KEY(vehicleState,vehicleLicensePlate) REFERENCES Vehicles 
+    FOREIGN KEY(vehicleState, vehicleLicensePlate) REFERENCES Vehicles 
         ON DELETE CASCADE
         ON UPDATE SET NULL;
 
