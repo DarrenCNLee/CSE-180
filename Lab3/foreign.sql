@@ -3,7 +3,7 @@ ALTER TABLE
 ADD
     CONSTRAINT OwnerStateAndLicenseIDFK 
     FOREIGN KEY(ownerState, ownerLicenseID) REFERENCES Owners
-        ON DELETE RESTRICT
+        ON DELETE
         ON UPDATE CASCADE;
 
 ALTER TABLE 
