@@ -8,6 +8,7 @@ INSERT INTO
 VALUES
     ('a', 'b', 'ZZ', 'errorID');
 
+
 INSERT INTO
     Photos(
         cameraID,
@@ -23,20 +24,24 @@ VALUES
         TIMESTAMP '2022-12-01 16:20:01'
     );
 
+
 INSERT INTO
     Photos(cameraID, photoTimestamp)
 VALUES
     (999, TIMESTAMP '2022-12-01 16:20:01');
+
 
 UPDATE
     Exits
 SET
     mileMarker = 99;
 
+
 UPDATE
     Exits
 SET
     mileMarker = -255;
+
 
 UPDATE
     Interchanges
@@ -45,10 +50,8 @@ SET
     highwayNum2 = 280,
     exitNum2 = 95
 WHERE
-    exitNum1 != 17
-    AND exitNum1 != 40
-    AND exitNum1 != 46
-    AND exitNum1 != 25;
+    exitNum1 NOT IN (17, 40, 46, 25);
+
 
 UPDATE
     Interchanges
@@ -56,11 +59,13 @@ SET
     highwayNum1 = 4,
     highwayNum2 = 3;
 
+
 UPDATE
     Owners
 SET
     startDate = NULL,
     expirationDate = NULL;
+
 
 UPDATE
     Owners
