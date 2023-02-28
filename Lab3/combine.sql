@@ -19,19 +19,14 @@ WHERE
     );
 
 UPDATE
-    Photos
+    Photos pho
 SET
     vehicleLicensePlate = pc.vehicleLicensePlate,
     vehicleState = 'CA'
 FROM
     PhotoChanges pc
 WHERE
-    (pc.cameraID, pc.photoTimestamp) IN (
-        SELECT
-            pho.cameraID,
-            pho.photoTimestamp
-        FROM
-            Photos pho
-    );
+    pc.cameraID = pho.cameraID
+    AND pc.photoTimestamp = pho.photoTimestamp;
 
 COMMIT;
