@@ -8,9 +8,9 @@ FROM
 WHERE
     e.isExitOpen
     AND e.highwayNum = h.highwayNum
-    AND h.highwayNum IN (
+    AND (h.highwayNum, e.exitNum) IN (
         SELECT
-            m.highwayNum
+            m.highwayNum, m.exitNum
         FROM
             MisdirectedExitView m
     )
@@ -22,12 +22,11 @@ GROUP BY
 -- output of the query on the load data before deletions:
 --  highwaynum | length | openmisdirectedexitcount
 -- ------------+--------+--------------------------
---           1 |  150.3 |                        3
---           8 |   90.0 |                        2
---          13 |   45.5 |                        4
---          17 |  102.6 |                        4
---         280 |  200.9 |                        3
--- (5 rows)
+--           1 |  150.3 |                        1
+--          13 |   45.5 |                        2
+--          17 |  102.6 |                        3
+--         280 |  200.9 |                        1
+-- (4 rows)
 
 
 DELETE FROM
@@ -46,11 +45,9 @@ WHERE
 -- output of the query after the deletions:
 --  highwaynum | length | openmisdirectedexitcount
 -- ------------+--------+--------------------------
---           1 |  150.3 |                        3
---           8 |   90.0 |                        2
---          13 |   45.5 |                        4
---          17 |  102.6 |                        3
--- (4 rows)
-
+--           1 |  150.3 |                        1
+--          13 |   45.5 |                        2
+--          17 |  102.6 |                        2
+-- (3 rows)
 
 -- Yes, the answer is different after deleting the tuples from Exits
