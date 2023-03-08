@@ -57,12 +57,35 @@ static void bad_exit(PGconn *conn)
 
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
-    PQexec(conn, “BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;”);
+    // PQexec(conn, “BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;”);
 
-    char[MAXSQLSTATEMENTSTRINGSIZE] doesCameraExist; 
-    sprintf(doesCameraExist, "SELECT cameraID FROM Cameras WHERE cameraID = %d;", theCameraID);
+    // char[MAXSQLSTATEMENTSTRINGSIZE] doesCameraExist; 
+    // sprintf(doesCameraExist, "SELECT cameraID FROM Cameras WHERE cameraID = %d;", theCameraID);
 
-    PQresult *res = PQexec(conn, doesCameraExist);
+    // PQresult *res = PQexec(conn, doesCameraExist);
+
+    // if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    // {
+    //     PQclear(res);
+    //     bad_exit(conn);
+    // }
+
+    // if (PQntuples(res) <= 0)
+    // {
+    //     PQclear(res);
+    //     return -1;
+    // }
+
+    char[MAXSQLSTATEMENTSTRINGSIZE] command;
+    sprintf(command, 
+        "SELECT c.highwayNum, c.mileMarker, COUNT(*) 
+        FROM Cameras c, Photos p
+        WHERE c.cameraID = %d
+            AND c.cameraID = p.cameraID
+        GROUP BY cameraID;",
+        theCameraID);
+    
+    PQresult *res = PQexec(conn, command);
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
@@ -76,24 +99,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         return -1;
     }
 
-    char[MAXSQLSTATEMENTSTRINGSIZE] command;
-    sprintf(command, 
-        "SELECT c.highwayNum, c.mileMarker, COUNT(*) 
-        FROM Cameras c, Photos p
-        WHERE c.cameraID = %d
-            AND c.cameraID = p.cameraID
-        GROUP BY cameraID;",
-        theCameraID);
-    
-    res = PQexec(conn, command);
-
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    {
-        PQclear(res);
-        bad_exit(conn);
-    }
-
-    PQexec(conn, “COMMIT;”);
+    // PQexec(conn, “COMMIT;”);
 
     printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
 
