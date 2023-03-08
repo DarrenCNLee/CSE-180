@@ -117,7 +117,33 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
+    char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
+    sprintf(doesHighwayExist, 
+        "SELECT *
+        FROM Highways
+        WHERE highwayNum = %d;",
+        theHighwayNum);
+    
+    PQresult *check = PQexec(conn, doesHighwayExist);
+
+    if (PQntuples(check) <= 0)
+    {
+        PQclear(check);
+        return -1;
+    }
+
     char command[MAXSQLSTATEMENTSTRINGSIZE];
+    sprintf(command, 
+        "UPDATE Exits
+        SET isExitOpen = TRUE
+        WHERE highwayNum = %d
+            AND (isExitOpen = FALSE
+            OR isExitOpen IS NULL);",
+        theHighwayNum);
+    
+    PQresult *res = PQexec(conn, command);
+
+    return atoi(PQcmdTuples(res));
 }
 
 /* Function: determineSpeedingViolationsAndFines:
