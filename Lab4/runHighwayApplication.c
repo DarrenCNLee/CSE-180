@@ -102,7 +102,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // PQexec(conn, “COMMIT;”);
 
     printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
-
+    PQclear(res);
     return 0; 
 }
 
@@ -142,8 +142,10 @@ int openAllExits(PGconn *conn, int theHighwayNum)
         theHighwayNum);
     
     PQresult *res = PQexec(conn, command);
+    int numExits = atoi(PQcmdTuples(res));
+    PQclear(res);
 
-    return atoi(PQcmdTuples(res));
+    return numExits;
 }
 
 /* Function: determineSpeedingViolationsAndFines:
@@ -167,6 +169,16 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
+    
+    PQresult *res = PQexec(conn, command);
+
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    {
+        PQclear(res);
+        return -1;
+    }
+
+    return 
 }
 
 int main(int argc, char **argv)
