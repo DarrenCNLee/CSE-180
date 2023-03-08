@@ -1,5 +1,16 @@
 START TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 
+UPDATE
+    Photos pho
+SET
+    vehicleLicensePlate = pc.vehicleLicensePlate,
+    vehicleState = 'CA'
+FROM
+    PhotoChanges pc
+WHERE
+    pc.cameraID = pho.cameraID
+    AND pc.photoTimestamp = pho.photoTimestamp;
+
 INSERT INTO
     Photos
 SELECT
@@ -17,16 +28,5 @@ WHERE
         FROM
             Photos pho
     );
-
-UPDATE
-    Photos pho
-SET
-    vehicleLicensePlate = pc.vehicleLicensePlate,
-    vehicleState = 'CA'
-FROM
-    PhotoChanges pc
-WHERE
-    pc.cameraID = pho.cameraID
-    AND pc.photoTimestamp = pho.photoTimestamp;
 
 COMMIT;
