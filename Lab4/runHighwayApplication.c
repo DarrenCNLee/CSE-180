@@ -59,7 +59,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     // PQexec(conn, “BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;”);
 
-    // char[MAXSQLSTATEMENTSTRINGSIZE] doesCameraExist; 
+    // char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE] ; 
     // sprintf(doesCameraExist, "SELECT cameraID FROM Cameras WHERE cameraID = %d;", theCameraID);
 
     // PQresult *res = PQexec(conn, doesCameraExist);
@@ -76,7 +76,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     //     return -1;
     // }
 
-    char[MAXSQLSTATEMENTSTRINGSIZE] command;
+    char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command, 
         "SELECT c.highwayNum, c.mileMarker, COUNT(*) 
         FROM Cameras c, Photos p
@@ -117,7 +117,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
-
+    char command[MAXSQLSTATEMENTSTRINGSIZE];
 }
 
 /* Function: determineSpeedingViolationsAndFines:
