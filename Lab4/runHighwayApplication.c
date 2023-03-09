@@ -182,7 +182,7 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
         return -1;
     }
 
-    int totalFines = PQgetvalue(res, 0, 0);
+    int totalFines = atoi(PQgetvalue(res, 0, 0));
     PQclear(res);
 
     return totalFines;
