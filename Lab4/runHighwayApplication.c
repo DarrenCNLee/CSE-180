@@ -169,7 +169,11 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
-    
+    char command[MAXSQLSTATEMENTSTRINGSIZE];
+    sprintf(command, 
+        "SELECT determineSpeedingViolationsAndFinesFunction(%d)",
+        maxFineTotal);
+
     PQresult *res = PQexec(conn, command);
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -178,7 +182,10 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
         return -1;
     }
 
-    return 
+    int totalFines = PQgetvalue(res, 0, 0);
+    PQclear(res);
+
+    return totalFines;
 }
 
 int main(int argc, char **argv)
