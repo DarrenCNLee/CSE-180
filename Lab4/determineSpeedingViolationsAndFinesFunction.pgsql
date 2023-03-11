@@ -11,6 +11,7 @@ RETURNS INTEGER AS $$
 
         theOwnerState CHAR(2);
         theOwnerLicenseID CHAR(8);
+        numViolations INTEGER;
 
     DECLARE finingCursor CURSOR FOR 
             SELECT o.ownerState, o.ownerLicenseID, COUNT(*)
