@@ -234,8 +234,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
-                PQerrorMessage(conn));
+            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
             bad_exit(conn);
     }
 
@@ -249,8 +248,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
-                PQerrorMessage(conn));
+            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
             bad_exit(conn);
     }
 
@@ -264,8 +262,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
-                PQerrorMessage(conn));
+            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
             bad_exit(conn);
     }
     
@@ -279,8 +276,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
-                PQerrorMessage(conn));
+            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
             bad_exit(conn);
     }
 
