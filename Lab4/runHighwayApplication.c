@@ -287,130 +287,134 @@ int main(int argc, char **argv)
     /* Perform the calls to openAllExits listed in Section 6 of Lab4,
      * and print messages as described.
      */
-    int highwayNum;
-    // test highway with highwayNum 101
-    highwayNum = 101;
-    result = openAllExits(conn, highwayNum);
-    if (result >= 0)
-    {
-        printf("%d exits were opened by openAllExits\n", result);
-    }
 
-    else if (result == -1)
-    {
-        printf("There is no highway whose number is %d\n", highwayNum);
-    }
 
-    else
-    {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
+    // int highwayNum;
+    // // test highway with highwayNum 101
+    // highwayNum = 101;
+    // result = openAllExits(conn, highwayNum);
+    // if (result >= 0)
+    // {
+    //     printf("%d exits were opened by openAllExits\n", result);
+    // }
 
-    // test highway with highwayNum 13
-    highwayNum = 13;
-    result = openAllExits(conn, highwayNum);
-    if (result >= 0)
-    {
-        printf("%d exits were opened by openAllExits\n", result);
-    }
+    // else if (result == -1)
+    // {
+    //     printf("There is no highway whose number is %d\n", highwayNum);
+    // }
 
-    else if (result == -1)
-    {
-        printf("There is no highway whose number is %d\n", highwayNum);
-    }
+    // else
+    // {
+    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
 
-    else
-    {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
+    // // test highway with highwayNum 13
+    // highwayNum = 13;
+    // result = openAllExits(conn, highwayNum);
+    // if (result >= 0)
+    // {
+    //     printf("%d exits were opened by openAllExits\n", result);
+    // }
 
-    // test highway with highwayNum 280
-    highwayNum = 280;
-    result = openAllExits(conn, highwayNum);
-    if (result >= 0)
-    {
-        printf("%d exits were opened by openAllExits\n", result);
-    }
+    // else if (result == -1)
+    // {
+    //     printf("There is no highway whose number is %d\n", highwayNum);
+    // }
 
-    else if (result == -1)
-    {
-        printf("There is no highway whose number is %d\n", highwayNum);
-    }
+    // else
+    // {
+    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
 
-    else
-    {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
+    // // test highway with highwayNum 280
+    // highwayNum = 280;
+    // result = openAllExits(conn, highwayNum);
+    // if (result >= 0)
+    // {
+    //     printf("%d exits were opened by openAllExits\n", result);
+    // }
 
-    // test highway with highwayNum 904
-    highwayNum = 17;
-    result = openAllExits(conn, highwayNum);
-    if (result >= 0)
-    {
-        printf("%d exits were opened by openAllExits\n", result);
-    }
+    // else if (result == -1)
+    // {
+    //     printf("There is no highway whose number is %d\n", highwayNum);
+    // }
 
-    else if (result == -1)
-    {
-        printf("There is no highway whose number is %d\n", highwayNum);
-    }
+    // else
+    // {
+    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
 
-    else
-    {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
+    // // test highway with highwayNum 904
+    // highwayNum = 17;
+    // result = openAllExits(conn, highwayNum);
+    // if (result >= 0)
+    // {
+    //     printf("%d exits were opened by openAllExits\n", result);
+    // }
 
-    /* Extra newline for readability */
-    printf("\n");
+    // else if (result == -1)
+    // {
+    //     printf("There is no highway whose number is %d\n", highwayNum);
+    // }
 
-    /* Perform the calls to determineSpeedingViolationsAndFines listed in Section
-     * 6 of Lab4, and print messages as described.
-     * You may use helper functions to do this, if you want.
-     */
-    int maxFineTotal;
-    // test with maxFinetotal of 300
-    maxFineTotal = 300;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // else
+    // {
+    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
 
-    // test with maxFinetotal of 240
-    maxFineTotal = 240;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // /* Extra newline for readability */
+    // printf("\n");
 
-    // test with maxFinetotal of 210
-    maxFineTotal = 210;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // /* Perform the calls to determineSpeedingViolationsAndFines listed in Section
+    //  * 6 of Lab4, and print messages as described.
+    //  * You may use helper functions to do this, if you want.
+    //  */
+    // int maxFineTotal;
+    // // test with maxFinetotal of 300
+    // maxFineTotal = 300;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    // test with maxFinetotal of 165
-    maxFineTotal = 165;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // // test with maxFinetotal of 240
+    // maxFineTotal = 240;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    // // test with maxFinetotal of 210
+    // maxFineTotal = 210;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    // // test with maxFinetotal of 165
+    // maxFineTotal = 165;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+
 
     good_exit(conn);
     return 0;
