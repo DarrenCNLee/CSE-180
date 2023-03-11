@@ -107,10 +107,24 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         bad_exit(conn);
     }
 
-    PQexec(conn, "COMMIT;");
+    // if there are no photos in the Photos table with cameraID equal to theCameraID
+    if (PQntuples(res) == 0)
+    {
+        sprintf(command,
+                "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
+                theCameraID);
+        PQclear(res);
+        res = PQexec(conn, command);
+        printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
+    }
 
-    // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
-    printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
+    else
+    {
+        // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
+        printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
+    }
+
+    PQexec(conn, "COMMIT;");
     PQclear(res);
     return 0;
 }
