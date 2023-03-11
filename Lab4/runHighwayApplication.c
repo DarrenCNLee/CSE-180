@@ -71,11 +71,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
-
-        if (debug)
-        {
-            printf("bad exit\n");
-        }
         bad_exit(conn);
     }
 
@@ -99,11 +94,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
-
-        if (debug)
-        {
-            printf("bad exit 2nd sql statement\n");
-        }
         bad_exit(conn);
     }
 
@@ -113,7 +103,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         sprintf(command,
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
-        PQclear(res);
+        // PQclear(res);
         res = PQexec(conn, command);
         printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
     }
@@ -308,85 +298,85 @@ int main(int argc, char **argv)
      * and print messages as described.
      */
 
-    // int highwayNum;
-    // // test highway with highwayNum 101
-    // highwayNum = 101;
-    // result = openAllExits(conn, highwayNum);
-    // if (result >= 0)
-    // {
-    //     printf("%d exits were opened by openAllExits\n", result);
-    // }
+    int highwayNum;
+    // test highway with highwayNum 101
+    highwayNum = 101;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0)
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
 
-    // else if (result == -1)
-    // {
-    //     printf("There is no highway whose number is %d\n", highwayNum);
-    // }
+    else if (result == -1)
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
 
-    // else
-    // {
-    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
 
-    // // test highway with highwayNum 13
-    // highwayNum = 13;
-    // result = openAllExits(conn, highwayNum);
-    // if (result >= 0)
-    // {
-    //     printf("%d exits were opened by openAllExits\n", result);
-    // }
+    // test highway with highwayNum 13
+    highwayNum = 13;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0)
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
 
-    // else if (result == -1)
-    // {
-    //     printf("There is no highway whose number is %d\n", highwayNum);
-    // }
+    else if (result == -1)
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
 
-    // else
-    // {
-    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
 
-    // // test highway with highwayNum 280
-    // highwayNum = 280;
-    // result = openAllExits(conn, highwayNum);
-    // if (result >= 0)
-    // {
-    //     printf("%d exits were opened by openAllExits\n", result);
-    // }
+    // test highway with highwayNum 280
+    highwayNum = 280;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0)
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
 
-    // else if (result == -1)
-    // {
-    //     printf("There is no highway whose number is %d\n", highwayNum);
-    // }
+    else if (result == -1)
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
 
-    // else
-    // {
-    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
 
-    // // test highway with highwayNum 904
-    // highwayNum = 17;
-    // result = openAllExits(conn, highwayNum);
-    // if (result >= 0)
-    // {
-    //     printf("%d exits were opened by openAllExits\n", result);
-    // }
+    // test highway with highwayNum 904
+    highwayNum = 17;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0)
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
 
-    // else if (result == -1)
-    // {
-    //     printf("There is no highway whose number is %d\n", highwayNum);
-    // }
+    else if (result == -1)
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
 
-    // else
-    // {
-    //     printf("Error in openAllExits function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
 
-    // /* Extra newline for readability */
-    // printf("\n");
+    /* Extra newline for readability */
+    printf("\n");
 
     // /* Perform the calls to determineSpeedingViolationsAndFines listed in Section
     //  * 6 of Lab4, and print messages as described.
