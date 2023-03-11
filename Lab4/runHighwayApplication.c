@@ -99,6 +99,12 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
+
+        
+        if (debug)
+        {
+            printf("bad exit 2nd sql statement\n");
+        }
         bad_exit(conn);
     }
 
