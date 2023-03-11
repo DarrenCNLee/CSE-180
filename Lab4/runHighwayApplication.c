@@ -16,6 +16,8 @@
 /* Maximum length of string version of integer; you don't have to use a value this big */
 #define MAXNUMBERSTRINGSIZE 20
 
+int debug = 1;
+
 /* Exit with success after closing connection to the server
  *  and freeing memory that was used by the PGconn object.
  */
@@ -221,6 +223,11 @@ int main(int argc, char **argv)
     /* Perform the calls to printCameraPhotoCount listed in Section 6 of Lab4,
      * printing error message if there's an error.
      */
+    if (debug)
+    {
+        printf("test\n");
+    }
+
     int cameraID;
     // test camera with id 951
     cameraID = 951;
