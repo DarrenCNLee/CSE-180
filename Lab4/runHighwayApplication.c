@@ -66,7 +66,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     PGresult *res = PQexec(conn, doesCameraExist);
 
     // check if executing the command worked
-    if (PGresultStatus(res) != PGRES_TUPLES_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         bad_exit(conn);
@@ -88,7 +88,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     *res = PQexec(conn, command);
 
     // check if executing the command worked
-    if (PGresultStatus(res) != PGRES_TUPLES_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         bad_exit(conn);
@@ -172,7 +172,7 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
     PGresult *res = PQexec(conn, command);
 
     // return a negative value if there was an error
-    if (PGresultStatus(res) != PGRES_TUPLES_OK)
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         return -1;
@@ -373,8 +373,8 @@ int main(int argc, char **argv)
      */
     int maxFineTotal;
     // test with maxFinetotal of 300
-    maxFinetotal = 300;
-    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    maxFineTotal = 300;
+    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -384,7 +384,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 240
     maxFinetotal = 240;
-    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -394,7 +394,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 210
     maxFinetotal = 210;
-    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -404,7 +404,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 165
     maxFinetotal = 165;
-    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
