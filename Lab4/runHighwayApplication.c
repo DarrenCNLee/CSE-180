@@ -130,6 +130,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
+    PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+
     // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesHighwayExist,
@@ -152,6 +154,8 @@ int openAllExits(PGconn *conn, int theHighwayNum)
             theHighwayNum);
 
     PGresult *res = PQexec(conn, command);
+
+    PQexec(conn, "COMMIT;");
 
     // return the number of exits that were updated
     int numExits = atoi(PQcmdTuples(res));
