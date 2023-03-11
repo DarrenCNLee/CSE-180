@@ -76,6 +76,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     //     return -1;
     // }
 
+
+    // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID 
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command, 
         "SELECT c.highwayNum, c.mileMarker, COUNT(*) 
@@ -87,12 +89,14 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     
     PQresult *res = PQexec(conn, command);
 
+    // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         bad_exit(conn);
     }
 
+    // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
         PQclear(res);
@@ -101,6 +105,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
     // PQexec(conn, “COMMIT;”);
 
+
+    // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
     printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
     PQclear(res);
     return 0; 
@@ -117,6 +123,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
+    // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesHighwayExist, 
         "SELECT *
@@ -126,12 +133,14 @@ int openAllExits(PGconn *conn, int theHighwayNum)
     
     PQresult *check = PQexec(conn, doesHighwayExist);
 
+    // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
     {
         PQclear(check);
         return -1;
     }
 
+    // command to update the Exits table by opening all exits that were not open already
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command, 
         "UPDATE Exits
@@ -142,9 +151,10 @@ int openAllExits(PGconn *conn, int theHighwayNum)
         theHighwayNum);
     
     PQresult *res = PQexec(conn, command);
+
+    // return the number of exits that were updated 
     int numExits = atoi(PQcmdTuples(res));
     PQclear(res);
-
     return numExits;
 }
 
@@ -169,6 +179,7 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
+    // command to call teh determineSpeedingViolationsAndFinesFunction function 
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command, 
         "SELECT determineSpeedingViolationsAndFinesFunction(%d)",
@@ -176,12 +187,14 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 
     PQresult *res = PQexec(conn, command);
 
+    // return a negative value if there was an error
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         return -1;
     }
 
+    // return the total fines assessed 
     int totalFines = atoi(PQgetvalue(res, 0, 0));
     PQclear(res);
 
@@ -224,6 +237,7 @@ int main(int argc, char **argv)
      * printing error message if there's an error.
      */
     int cameraID;
+    // test camera with id 951
     cameraID = 951;
     result = printCameraPhotoCount(conn, cameraID);
     switch(result)
@@ -238,6 +252,8 @@ int main(int argc, char **argv)
             bad_exit(conn);
     }
 
+
+    // test camera with id 960
     cameraID = 960;
     result = printCameraPhotoCount(conn, cameraID);
     switch(result)
@@ -252,6 +268,8 @@ int main(int argc, char **argv)
             bad_exit(conn);
     }
 
+
+    // test camera with id 856
     cameraID = 856;
     result = printCameraPhotoCount(conn, cameraID);
     switch(result)
@@ -265,7 +283,9 @@ int main(int argc, char **argv)
             printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
             bad_exit(conn);
     }
-    
+
+
+    // test camera with id 905
     cameraID = 904;
     result = printCameraPhotoCount(conn, cameraID);
     switch(result)
@@ -286,7 +306,85 @@ int main(int argc, char **argv)
     /* Perform the calls to openAllExits listed in Section 6 of Lab4,
      * and print messages as described.
      */
-    int 
+    int highwayNum;
+    // test highway with highwayNum 101
+    highwayNum = 101;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0) 
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
+
+    else if (result == -1) 
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
+
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+
+
+    // test highway with highwayNum 13
+    highwayNum = 13;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0) 
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
+
+    else if (result == -1) 
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
+
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+
+
+    // test highway with highwayNum 280
+    highwayNum = 280;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0) 
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
+
+    else if (result == -1) 
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
+
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+
+
+    // test highway with highwayNum 904
+    highwayNum = 17;
+    result = openAllExits(conn, highwayNum);
+    if (result >= 0) 
+    {
+        printf("%d exits were opened by openAllExits\n", result);
+    }
+
+    else if (result == -1) 
+    {
+        printf("There is no highway whose number is %d\n", highwayNum);
+    }
+
+    else
+    {
+        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
 
     /* Extra newline for readability */
     printf("\n");
@@ -295,6 +393,49 @@ int main(int argc, char **argv)
      * 6 of Lab4, and print messages as described.
      * You may use helper functions to do this, if you want.
      */
+    int maxFineTotal;
+    // test with maxFinetotal of 300
+    maxFinetotal = 300;
+    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }    
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+
+    // test with maxFinetotal of 240
+    maxFinetotal = 240;
+    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }    
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    
+    // test with maxFinetotal of 210
+    maxFinetotal = 210;
+    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }    
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+
+    // test with maxFinetotal of 165
+    maxFinetotal = 165;
+    result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }    
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     good_exit(conn);
     return 0;
