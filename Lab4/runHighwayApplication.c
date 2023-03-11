@@ -236,7 +236,7 @@ int main(int argc, char **argv)
         default:
             fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
                 PQerrorMessage(conn));
-            exit(bad_exit);
+            bad_exit(conn);
     }
 
     cameraID = 960;
@@ -251,7 +251,7 @@ int main(int argc, char **argv)
         default:
             fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
                 PQerrorMessage(conn));
-            exit(bad_exit);
+            bad_exit(conn);
     }
 
     cameraID = 856;
@@ -266,7 +266,7 @@ int main(int argc, char **argv)
         default:
             fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
                 PQerrorMessage(conn));
-            exit(bad_exit);
+            bad_exit(conn);
     }
     
     cameraID = 904;
@@ -281,7 +281,7 @@ int main(int argc, char **argv)
         default:
             fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
                 PQerrorMessage(conn));
-            exit(bad_exit);
+            bad_exit(conn);
     }
 
     /* Extra newline for readability */
