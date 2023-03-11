@@ -153,9 +153,9 @@ int openAllExits(PGconn *conn, int theHighwayNum)
             "UPDATE Exits SET isExitOpen = TRUE WHERE highwayNum = %d AND (isExitOpen = FALSE OR isExitOpen IS NULL);",
             theHighwayNum);
 
-    PGresult *res = PQexec(conn, command);
-
     PQexec(conn, "COMMIT;");
+
+    PGresult *res = PQexec(conn, command);
 
     // return the number of exits that were updated
     int numExits = atoi(PQcmdTuples(res));
