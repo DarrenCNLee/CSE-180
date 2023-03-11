@@ -374,7 +374,7 @@ int main(int argc, char **argv)
     int maxFineTotal;
     // test with maxFinetotal of 300
     maxFineTotal = 300;
-    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -384,7 +384,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 240
     maxFineTotal = 240;
-    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -394,7 +394,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 210
     maxFineTotal = 210;
-    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
@@ -404,7 +404,7 @@ int main(int argc, char **argv)
 
     // test with maxFinetotal of 165
     maxFineTotal = 165;
-    result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
