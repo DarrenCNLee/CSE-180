@@ -89,7 +89,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command,
-            "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = % d AND c.cameraID = p.cameraID GROUP BY cameraID;",
+            "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
             theCameraID);
 
     PQclear(res);
@@ -100,7 +100,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PQclear(res);
 
-        
         if (debug)
         {
             printf("bad exit 2nd sql statement\n");
@@ -234,7 +233,6 @@ int main(int argc, char **argv)
     /* Perform the calls to printCameraPhotoCount listed in Section 6 of Lab4,
      * printing error message if there's an error.
      */
-
 
     int cameraID;
     // test camera with id 951
