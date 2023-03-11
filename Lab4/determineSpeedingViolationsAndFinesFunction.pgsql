@@ -4,6 +4,7 @@ RETURNS INTEGER AS $$
 
     DECLARE
         totalFines INTEGER;
+        curFines INTEGER;
 
     DECLARE finingCursor CURSOR FOR 
             SELECT o.ownerState, o.ownerLicenseID, COUNT(*)
@@ -30,16 +31,23 @@ RETURNS INTEGER AS $$
         
             FETCH finingCursor INTO theOwnerState, theOwnerLicense, numViolations;
 
-            EXIT WHEN NOT FOUND OR totalFines >= maxFineTotal;
+            EXIT WHEN NOT FOUND;
 
-            IF numViolations >= 3 THEN totalFines := totalFines + 50 * numViolations; 
-            ELSIF numViolations = 2 THEN totalFines 
+            IF numViolations >= 3 THEN curFines := 50 * numViolations; 
+            ELSIF numViolations = 2 THEN curFines :=  40; 
+            ELSIF numViolations = 1 THEN curFines := 10;
+            ELSE curFines := 0;
+            END IF; 
+
+            totalFines := totalFines + curFines;
+
+            EXIT WHEN totalFines >= maxFineTotal;
 
             UPDATE Owners
-            SET speedingViolations = numViolations
+            SET speedingViolations = numViolations,
+                fine = curFines
             WHERE ownerState = theOwnerState 
                 AND ownerLicense = theOwnerLicense;
-
 
         END LOOP;
         CLOSE finingCursor;
