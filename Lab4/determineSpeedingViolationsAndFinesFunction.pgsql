@@ -3,7 +3,10 @@ determineSpeedingViolationsAndFines(maxFineTotal INTEGER)
 RETURNS INTEGER AS $$
 
     DECLARE
-        totalFines INTEGER;
+        -- total fines assessed
+        totalFines INTEGER; 
+
+        -- fines for the current owner
         curFines INTEGER;
 
     DECLARE finingCursor CURSOR FOR 
@@ -19,7 +22,9 @@ RETURNS INTEGER AS $$
 
     BEGIN
 
+    -- input validation
     if maxFineTotal <= 0 THEN 
+        -- illegal value of maxFineTotal
         RETURN -1;
         END IF;
 
@@ -31,7 +36,9 @@ RETURNS INTEGER AS $$
         
             FETCH finingCursor INTO theOwnerState, theOwnerLicense, numViolations;
 
-            EXIT WHEN NOT FOUND;
+            -- Exit if there are no more records for finingCursor,
+            -- or when we already have assessed maxFineTotal fines.
+            EXIT WHEN NOT FOUND totalFines >= maxFineTotal; 
 
             IF numViolations >= 3 THEN curFines := 50 * numViolations; 
             ELSIF numViolations = 2 THEN curFines :=  40; 
@@ -39,10 +46,13 @@ RETURNS INTEGER AS $$
             ELSE curFines := 0;
             END IF; 
 
+            -- if the adding the current fine will make totalFines greater than the maxFineTotal, go to the next tuple
+            CONTINUE WHEN totalFines + curFines > maxFineTotal;
+            
+            -- otherwise increase totalFines by the curFines
             totalFines := totalFines + curFines;
 
-            EXIT WHEN totalFines >= maxFineTotal;
-
+            -- update the Owners table by setting the number of speeding violations and the fines
             UPDATE Owners
             SET speedingViolations = numViolations,
                 fine = curFines
