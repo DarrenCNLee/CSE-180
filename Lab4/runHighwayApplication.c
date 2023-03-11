@@ -225,14 +225,11 @@ int main(int argc, char **argv)
     // test camera with id 951
     cameraID = 951;
     result = printCameraPhotoCount(conn, cameraID);
-    switch (result)
-    {
-    case 0:
-        break;
-    case -1:
+    if (result == -1){
         printf("No camera exists whose id is %d\n", cameraID);
-        break;
-    default:
+    }
+    else if (result != 0)
+    {
         printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
@@ -240,14 +237,11 @@ int main(int argc, char **argv)
     // test camera with id 960
     cameraID = 960;
     result = printCameraPhotoCount(conn, cameraID);
-    switch (result)
-    {
-    case 0:
-        break;
-    case -1:
+   if (result == -1){
         printf("No camera exists whose id is %d\n", cameraID);
-        break;
-    default:
+    }
+    else if (result != 0)
+    {
         printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
@@ -255,14 +249,11 @@ int main(int argc, char **argv)
     // test camera with id 856
     cameraID = 856;
     result = printCameraPhotoCount(conn, cameraID);
-    switch (result)
-    {
-    case 0:
-        break;
-    case -1:
+    if (result == -1){
         printf("No camera exists whose id is %d\n", cameraID);
-        break;
-    default:
+    }
+    else if (result != 0)
+    {
         printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
@@ -270,14 +261,11 @@ int main(int argc, char **argv)
     // test camera with id 905
     cameraID = 904;
     result = printCameraPhotoCount(conn, cameraID);
-    switch (result)
-    {
-    case 0:
-        break;
-    case -1:
+    if (result == -1){
         printf("No camera exists whose id is %d\n", cameraID);
-        break;
-    default:
+    }
+    else if (result != 0)
+    {
         printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
@@ -414,8 +402,6 @@ int main(int argc, char **argv)
     //     bad_exit(conn);
     // }
     // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
-
 
     good_exit(conn);
     return 0;
