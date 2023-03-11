@@ -383,7 +383,7 @@ int main(int argc, char **argv)
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     // test with maxFinetotal of 240
-    maxFinetotal = 240;
+    maxFineTotal = 240;
     result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
@@ -393,7 +393,7 @@ int main(int argc, char **argv)
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     // test with maxFinetotal of 210
-    maxFinetotal = 210;
+    maxFineTotal = 210;
     result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
@@ -403,7 +403,7 @@ int main(int argc, char **argv)
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     // test with maxFinetotal of 165
-    maxFinetotal = 165;
+    maxFineTotal = 165;
     result = determineSpeedingViolationsAndFines(conn, maxFinetotal);
     if (result < 0)
     {
