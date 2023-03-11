@@ -85,6 +85,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = % d AND c.cameraID = p.cameraID GROUP BY cameraID;",
             theCameraID);
 
+    PQclear(res);
     res = PQexec(conn, command);
 
     // check if executing the command worked
