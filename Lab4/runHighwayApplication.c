@@ -223,6 +223,66 @@ int main(int argc, char **argv)
     /* Perform the calls to printCameraPhotoCount listed in Section 6 of Lab4,
      * printing error message if there's an error.
      */
+    int cameraID;
+    cameraID = 951;
+    result = printCameraPhotoCount(conn, cameraID);
+    switch(result)
+    {
+        case 0: 
+            break;
+        case -1:
+            printf("No camera exists whose id is %d\n", cameraID);
+            break;
+        default:
+            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
+                PQerrorMessage(conn));
+            exit(bad_exit);
+    }
+
+    cameraID = 960;
+    result = printCameraPhotoCount(conn, cameraID);
+    switch(result)
+    {
+        case 0: 
+            break;
+        case -1:
+            printf("No camera exists whose id is %d\n", cameraID);
+            break;
+        default:
+            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
+                PQerrorMessage(conn));
+            exit(bad_exit);
+    }
+
+    cameraID = 856;
+    result = printCameraPhotoCount(conn, cameraID);
+    switch(result)
+    {
+        case 0: 
+            break;
+        case -1:
+            printf("No camera exists whose id is %d\n", cameraID);
+            break;
+        default:
+            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
+                PQerrorMessage(conn));
+            exit(bad_exit);
+    }
+    
+    cameraID = 904;
+    result = printCameraPhotoCount(conn, cameraID);
+    switch(result)
+    {
+        case 0: 
+            break;
+        case -1:
+            printf("No camera exists whose id is %d\n", cameraID);
+            break;
+        default:
+            fprintf(stderr, "Error in printCameraPhotoCount function. Connection to database failed: %s\n",
+                PQerrorMessage(conn));
+            exit(bad_exit);
+    }
 
     /* Extra newline for readability */
     printf("\n");
@@ -230,6 +290,7 @@ int main(int argc, char **argv)
     /* Perform the calls to openAllExits listed in Section 6 of Lab4,
      * and print messages as described.
      */
+    int 
 
     /* Extra newline for readability */
     printf("\n");
