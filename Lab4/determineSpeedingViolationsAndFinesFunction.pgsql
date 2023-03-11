@@ -34,6 +34,9 @@ RETURNS INTEGER AS $$
 
         totalFines := 0;
 
+        UPDATE Owners
+        SET speedingViolations = 0, fine = 0;
+
         OPEN finingCursor; 
 
         LOOP
@@ -58,8 +61,7 @@ RETURNS INTEGER AS $$
 
             -- update the Owners table by setting the number of speeding violations and the fines
             UPDATE Owners
-            SET speedingViolations = numViolations,
-                fine = curFines
+            SET speedingViolations = numViolations, fine = curFines
             WHERE ownerState = theOwnerState 
                 AND ownerLicenseID = theOwnerLicenseID;
 

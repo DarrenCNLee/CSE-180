@@ -48,24 +48,25 @@ static void bad_exit(PGconn *conn)
  */
 
 /* Function: printCameraPhotoCount:
- * -------------------------------------
- * Parameters:  connection, and theCameraID, which should be the ID of a camera.
- * Prints thecameraID, and number of photos taken by that camera.
- * Return 0 if normal execution, -1 if no such camera.
- * bad_exit if SQL statement execution fails.
- */
+ * -------------------------------------
+ * Parameters:  connection, and theCameraID, which should be the ID of a camera.
+ * Prints the cameraID, the highwayNum and mileMarker of that camera, and the
+ * number of number of photos for that camera, if camera exists for thecameraID.
+ * Return 0 if normal execution, -1 if no such camera.
+ * bad_exit if SQL statement execution fails.
+ */
 
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
-    PQexec(conn, “BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;”);
+    PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
-    char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE] ; 
+    char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesCameraExist, "SELECT cameraID FROM Cameras WHERE cameraID = %d;", theCameraID);
 
-    PQresult *res = PQexec(conn, doesCameraExist);
+    PGresult *res = PQexec(conn, doesCameraExist);
 
     // check if executing the command worked
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    if (PGresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         bad_exit(conn);
@@ -78,31 +79,27 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         return -1;
     }
 
-    // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID 
+    // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(command, 
-        "SELECT c.highwayNum, c.mileMarker, COUNT(*) 
-        FROM Cameras c, Photos p
-        WHERE c.cameraID = %d
-            AND c.cameraID = p.cameraID
-        GROUP BY cameraID;",
-        theCameraID);
-    
+    sprintf(command,
+            "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = % d AND c.cameraID = p.cameraID GROUP BY cameraID;",
+            theCameraID);
+
     *res = PQexec(conn, command);
 
     // check if executing the command worked
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    if (PGresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         bad_exit(conn);
     }
 
-    PQexec(conn, “COMMIT;”);
+    PQexec(conn, "COMMIT;");
 
     // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
     printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
     PQclear(res);
-    return 0; 
+    return 0;
 }
 
 /* Function: openAllExits:
@@ -118,13 +115,11 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 {
     // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(doesHighwayExist, 
-        "SELECT *
-        FROM Highways
-        WHERE highwayNum = %d;",
-        theHighwayNum);
-    
-    PQresult *check = PQexec(conn, doesHighwayExist);
+    sprintf(doesHighwayExist,
+            "SELECT * FROM Highways WHERE highwayNum = %d;",
+            theHighwayNum);
+
+    PGresult *check = PQexec(conn, doesHighwayExist);
 
     // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
@@ -135,17 +130,13 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
     // command to update the Exits table by opening all exits that were not open already
     char command[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(command, 
-        "UPDATE Exits
-        SET isExitOpen = TRUE
-        WHERE highwayNum = %d
-            AND (isExitOpen = FALSE
-            OR isExitOpen IS NULL);",
-        theHighwayNum);
-    
-    PQresult *res = PQexec(conn, command);
+    sprintf(command,
+            "UPDATE Exits SET isExitOpen = TRUE WHERE highwayNum = %d AND (isExitOpen = FALSE OR isExitOpen IS NULL);",
+            theHighwayNum);
 
-    // return the number of exits that were updated 
+    PGresult *res = PQexec(conn, command);
+
+    // return the number of exits that were updated
     int numExits = atoi(PQcmdTuples(res));
     PQclear(res);
     return numExits;
@@ -172,22 +163,22 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
-    // command to call teh determineSpeedingViolationsAndFinesFunction function 
+    // command to call teh determineSpeedingViolationsAndFinesFunction function
     char command[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(command, 
-        "SELECT determineSpeedingViolationsAndFinesFunction(%d)",
-        maxFineTotal);
+    sprintf(command,
+            "SELECT determineSpeedingViolationsAndFinesFunction(%d)",
+            maxFineTotal);
 
-    PQresult *res = PQexec(conn, command);
+    PGresult *res = PQexec(conn, command);
 
     // return a negative value if there was an error
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    if (PGresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
         return -1;
     }
 
-    // return the total fines assessed 
+    // return the total fines assessed
     int totalFines = atoi(PQgetvalue(res, 0, 0));
     PQclear(res);
 
@@ -233,64 +224,61 @@ int main(int argc, char **argv)
     // test camera with id 951
     cameraID = 951;
     result = printCameraPhotoCount(conn, cameraID);
-    switch(result)
+    switch (result)
     {
-        case 0: 
-            break;
-        case -1:
-            printf("No camera exists whose id is %d\n", cameraID);
-            break;
-        default:
-            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
-            bad_exit(conn);
+    case 0:
+        break;
+    case -1:
+        printf("No camera exists whose id is %d\n", cameraID);
+        break;
+    default:
+        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        bad_exit(conn);
     }
-
 
     // test camera with id 960
     cameraID = 960;
     result = printCameraPhotoCount(conn, cameraID);
-    switch(result)
+    switch (result)
     {
-        case 0: 
-            break;
-        case -1:
-            printf("No camera exists whose id is %d\n", cameraID);
-            break;
-        default:
-            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
-            bad_exit(conn);
+    case 0:
+        break;
+    case -1:
+        printf("No camera exists whose id is %d\n", cameraID);
+        break;
+    default:
+        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        bad_exit(conn);
     }
-
 
     // test camera with id 856
     cameraID = 856;
     result = printCameraPhotoCount(conn, cameraID);
-    switch(result)
+    switch (result)
     {
-        case 0: 
-            break;
-        case -1:
-            printf("No camera exists whose id is %d\n", cameraID);
-            break;
-        default:
-            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
-            bad_exit(conn);
+    case 0:
+        break;
+    case -1:
+        printf("No camera exists whose id is %d\n", cameraID);
+        break;
+    default:
+        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        bad_exit(conn);
     }
-
 
     // test camera with id 905
     cameraID = 904;
     result = printCameraPhotoCount(conn, cameraID);
-    switch(result)
+    switch (result)
     {
-        case 0: 
-            break;
-        case -1:
-            printf("No camera exists whose id is %d\n", cameraID);
-            break;
-        default:
-            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
-            bad_exit(conn);
+    case 0:
+        break;
+    case -1:
+        printf("No camera exists whose id is %d\n", cameraID);
+        break;
+    default:
+        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        bad_exit(conn);
     }
 
     /* Extra newline for readability */
@@ -303,12 +291,12 @@ int main(int argc, char **argv)
     // test highway with highwayNum 101
     highwayNum = 101;
     result = openAllExits(conn, highwayNum);
-    if (result >= 0) 
+    if (result >= 0)
     {
         printf("%d exits were opened by openAllExits\n", result);
     }
 
-    else if (result == -1) 
+    else if (result == -1)
     {
         printf("There is no highway whose number is %d\n", highwayNum);
     }
@@ -318,17 +306,16 @@ int main(int argc, char **argv)
         printf("Error in openAllExits function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
-
 
     // test highway with highwayNum 13
     highwayNum = 13;
     result = openAllExits(conn, highwayNum);
-    if (result >= 0) 
+    if (result >= 0)
     {
         printf("%d exits were opened by openAllExits\n", result);
     }
 
-    else if (result == -1) 
+    else if (result == -1)
     {
         printf("There is no highway whose number is %d\n", highwayNum);
     }
@@ -338,17 +325,16 @@ int main(int argc, char **argv)
         printf("Error in openAllExits function. Bad value returned: %d\n", result);
         bad_exit(conn);
     }
-
 
     // test highway with highwayNum 280
     highwayNum = 280;
     result = openAllExits(conn, highwayNum);
-    if (result >= 0) 
+    if (result >= 0)
     {
         printf("%d exits were opened by openAllExits\n", result);
     }
 
-    else if (result == -1) 
+    else if (result == -1)
     {
         printf("There is no highway whose number is %d\n", highwayNum);
     }
@@ -359,16 +345,15 @@ int main(int argc, char **argv)
         bad_exit(conn);
     }
 
-
     // test highway with highwayNum 904
     highwayNum = 17;
     result = openAllExits(conn, highwayNum);
-    if (result >= 0) 
+    if (result >= 0)
     {
         printf("%d exits were opened by openAllExits\n", result);
     }
 
-    else if (result == -1) 
+    else if (result == -1)
     {
         printf("There is no highway whose number is %d\n", highwayNum);
     }
@@ -394,9 +379,8 @@ int main(int argc, char **argv)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
         bad_exit(conn);
-    }    
+    }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
 
     // test with maxFinetotal of 240
     maxFinetotal = 240;
@@ -405,10 +389,9 @@ int main(int argc, char **argv)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
         bad_exit(conn);
-    }    
+    }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    
     // test with maxFinetotal of 210
     maxFinetotal = 210;
     result = determineSpeedingViolationsAndFines(conn, maxFinesTotal);
@@ -416,9 +399,8 @@ int main(int argc, char **argv)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
         bad_exit(conn);
-    }    
+    }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
 
     // test with maxFinetotal of 165
     maxFinetotal = 165;
@@ -427,7 +409,7 @@ int main(int argc, char **argv)
     {
         printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
         bad_exit(conn);
-    }    
+    }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     good_exit(conn);
