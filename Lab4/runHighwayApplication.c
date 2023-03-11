@@ -234,7 +234,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
+            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
             bad_exit(conn);
     }
 
@@ -248,7 +248,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
+            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
             bad_exit(conn);
     }
 
@@ -262,7 +262,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
+            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
             bad_exit(conn);
     }
     
@@ -276,7 +276,7 @@ int main(int argc, char **argv)
             printf("No camera exists whose id is %d\n", cameraID);
             break;
         default:
-            printf("Error in printCameraPhotoCount function. SQL statement execution failed");
+            printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
             bad_exit(conn);
     }
 
