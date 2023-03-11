@@ -61,7 +61,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(doesCameraExist, "SELECT cameraID FROM Cameras WHERE cameraID = %d;", theCameraID);
+    sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
 
     PGresult *res = PQexec(conn, doesCameraExist);
 
