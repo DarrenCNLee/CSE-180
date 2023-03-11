@@ -71,6 +71,11 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
+
+        if (debug)
+        {
+            printf("bad exit\n");
+        }
         bad_exit(conn);
     }
 
@@ -223,16 +228,14 @@ int main(int argc, char **argv)
     /* Perform the calls to printCameraPhotoCount listed in Section 6 of Lab4,
      * printing error message if there's an error.
      */
-    if (debug)
-    {
-        printf("test\n");
-    }
+
 
     int cameraID;
     // test camera with id 951
     cameraID = 951;
     result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1){
+    if (result == -1)
+    {
         printf("No camera exists whose id is %d\n", cameraID);
     }
     else if (result != 0)
@@ -244,7 +247,8 @@ int main(int argc, char **argv)
     // test camera with id 960
     cameraID = 960;
     result = printCameraPhotoCount(conn, cameraID);
-   if (result == -1){
+    if (result == -1)
+    {
         printf("No camera exists whose id is %d\n", cameraID);
     }
     else if (result != 0)
@@ -256,7 +260,8 @@ int main(int argc, char **argv)
     // test camera with id 856
     cameraID = 856;
     result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1){
+    if (result == -1)
+    {
         printf("No camera exists whose id is %d\n", cameraID);
     }
     else if (result != 0)
@@ -268,7 +273,8 @@ int main(int argc, char **argv)
     // test camera with id 905
     cameraID = 904;
     result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1){
+    if (result == -1)
+    {
         printf("No camera exists whose id is %d\n", cameraID);
     }
     else if (result != 0)
@@ -283,7 +289,6 @@ int main(int argc, char **argv)
     /* Perform the calls to openAllExits listed in Section 6 of Lab4,
      * and print messages as described.
      */
-
 
     // int highwayNum;
     // // test highway with highwayNum 101
