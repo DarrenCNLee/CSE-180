@@ -42,7 +42,7 @@ RETURNS INTEGER AS $$
 
             -- Exit if there are no more records for finingCursor,
             -- or when we already have assessed maxFineTotal fines.
-            EXIT WHEN NOT FOUND totalFines >= maxFineTotal; 
+            EXIT WHEN NOT FOUND OR totalFines >= maxFineTotal; 
 
             IF numViolations >= 3 THEN curFines := 50 * numViolations; 
             ELSIF numViolations = 2 THEN curFines :=  40; 
