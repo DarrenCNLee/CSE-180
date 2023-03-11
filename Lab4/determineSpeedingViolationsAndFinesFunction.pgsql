@@ -9,6 +9,9 @@ RETURNS INTEGER AS $$
         -- fines for the current owner
         curFines INTEGER;
 
+        theOwnerState CHAR(2);
+        theOwnerLicenseID CHAR(8);
+
     DECLARE finingCursor CURSOR FOR 
             SELECT o.ownerState, o.ownerLicenseID, COUNT(*)
             FROM Owners o, DistancesAndIntervalsForPhotos d, Highways h, Vehicles v 
@@ -34,7 +37,7 @@ RETURNS INTEGER AS $$
 
         LOOP
         
-            FETCH finingCursor INTO theOwnerState, theOwnerLicense, numViolations;
+            FETCH finingCursor INTO theOwnerState, theOwnerLicenseID, numViolations;
 
             -- Exit if there are no more records for finingCursor,
             -- or when we already have assessed maxFineTotal fines.
@@ -57,7 +60,7 @@ RETURNS INTEGER AS $$
             SET speedingViolations = numViolations,
                 fine = curFines
             WHERE ownerState = theOwnerState 
-                AND ownerLicense = theOwnerLicense;
+                AND ownerLicenseID = theOwnerLicenseID;
 
         END LOOP;
         CLOSE finingCursor;
