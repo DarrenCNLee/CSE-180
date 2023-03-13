@@ -106,7 +106,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         sprintf(command,
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
-        // PQclear(res);
+        PQclear(res);
         res = PQexec(conn, command);
         printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
     }
@@ -189,10 +189,6 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
-    if (debug)
-    {
-        printf("starting determinespeeding function\n");
-    }
 
     // command to call teh determineSpeedingViolationsAndFinesFunction function
     char command[MAXSQLSTATEMENTSTRINGSIZE];
@@ -407,6 +403,10 @@ int main(int argc, char **argv)
      * 6 of Lab4, and print messages as described.
      * You may use helper functions to do this, if you want.
      */
+    if (debug)
+    {
+        printf("starting determinespeeding function\n");
+    }
     int maxFineTotal;
     // test with maxFinetotal of 300
     maxFineTotal = 300;
@@ -418,6 +418,10 @@ int main(int argc, char **argv)
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
+    if (debug)
+    {
+        printf("starting determinespeeding function\n");
+    }
     // test with maxFinetotal of 240
     maxFineTotal = 240;
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
