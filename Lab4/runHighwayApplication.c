@@ -70,6 +70,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
+        PQexec(conn, "ROLLBACK");
         PQclear(res);
         bad_exit(conn);
     }
@@ -77,6 +78,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
+        PQexec(conn, "COMMIT;");
         PQclear(res);
         return -1;
     }
@@ -130,6 +132,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
+    PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+
     // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesHighwayExist,
@@ -141,11 +145,10 @@ int openAllExits(PGconn *conn, int theHighwayNum)
     // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
     {
+        PQexec(conn, "ROLLBACK;");
         PQclear(check);
         return -1;
     }
-
-    PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
     // command to update the Exits table by opening all exits that were not open already
     char command[MAXSQLSTATEMENTSTRINGSIZE];
@@ -382,50 +385,50 @@ int main(int argc, char **argv)
     /* Extra newline for readability */
     printf("\n");
 
-    // /* Perform the calls to determineSpeedingViolationsAndFines listed in Section
-    //  * 6 of Lab4, and print messages as described.
-    //  * You may use helper functions to do this, if you want.
-    //  */
-    // int maxFineTotal;
-    // // test with maxFinetotal of 300
-    // maxFineTotal = 300;
-    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    // if (result < 0)
-    // {
-    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
-    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    /* Perform the calls to determineSpeedingViolationsAndFines listed in Section
+     * 6 of Lab4, and print messages as described.
+     * You may use helper functions to do this, if you want.
+     */
+    int maxFineTotal;
+    // test with maxFinetotal of 300
+    maxFineTotal = 300;
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    // // test with maxFinetotal of 240
-    // maxFineTotal = 240;
-    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    // if (result < 0)
-    // {
-    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
-    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // test with maxFinetotal of 240
+    maxFineTotal = 240;
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    // // test with maxFinetotal of 210
-    // maxFineTotal = 210;
-    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    // if (result < 0)
-    // {
-    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
-    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // test with maxFinetotal of 210
+    maxFineTotal = 210;
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    // // test with maxFinetotal of 165
-    // maxFineTotal = 165;
-    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    // if (result < 0)
-    // {
-    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    //     bad_exit(conn);
-    // }
-    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // test with maxFinetotal of 165
+    maxFineTotal = 165;
+    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    if (result < 0)
+    {
+        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        bad_exit(conn);
+    }
+    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
     good_exit(conn);
     return 0;
