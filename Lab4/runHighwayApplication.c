@@ -201,18 +201,23 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
-        
+
         if (debug)
         {
             printf("error in determinespeeding function  returning -1\n");
         }
-        
+
         return -1;
     }
 
     // return the total fines assessed
     int totalFines = atoi(PQgetvalue(res, 0, 0));
     PQclear(res);
+
+    if (debug)
+    {
+        printf("returning totalfines %d\n", totalFines);
+    }
 
     return totalFines;
 }
