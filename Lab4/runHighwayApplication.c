@@ -95,6 +95,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
+        PQexec(conn, "ROLLBACK");
         PQclear(res);
         bad_exit(conn);
     }
@@ -145,7 +146,7 @@ int openAllExits(PGconn *conn, int theHighwayNum)
     // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
     {
-        PQexec(conn, "ROLLBACK;");
+        PQexec(conn, "COMMIT;");
         PQclear(check);
         return -1;
     }
@@ -162,6 +163,7 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
     // return the number of exits that were updated
     int numExits = atoi(PQcmdTuples(res));
+    PQclear(check);
     PQclear(res);
     return numExits;
 }
@@ -199,6 +201,12 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
+        
+        if (debug)
+        {
+            printf("error in determinespeeding function  returning -1\n");
+        }
+        
         return -1;
     }
 
