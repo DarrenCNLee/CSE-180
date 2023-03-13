@@ -403,10 +403,10 @@ int main(int argc, char **argv)
      * 6 of Lab4, and print messages as described.
      * You may use helper functions to do this, if you want.
      */
-    if (debug)
-    {
-        printf("starting determinespeeding function\n");
-    }
+    printf("starting determinespeeding function\n");
+    // if (debug)
+    // {
+    // }
     int maxFineTotal;
     // test with maxFinetotal of 300
     maxFineTotal = 300;
