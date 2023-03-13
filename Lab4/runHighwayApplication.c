@@ -189,6 +189,11 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
 int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
 {
+    if (debug)
+    {
+        printf("starting determinespeeding function\n");
+    }
+
     // command to call teh determineSpeedingViolationsAndFinesFunction function
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command,
