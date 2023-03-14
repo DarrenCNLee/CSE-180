@@ -59,19 +59,12 @@ static void bad_exit(PGconn *conn)
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *res = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
-    // check if executing the command worked
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    {
-        PQclear(res);
-        bad_exit(conn);
-    }
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
 
-    PQclear(res);
-    res = PQexec(conn, doesCameraExist);
+    PGresult *res = PQexec(conn, doesCameraExist);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
