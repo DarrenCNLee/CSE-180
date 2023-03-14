@@ -81,6 +81,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         PQclear(res);
         return -1;
     }
+    PQclear(res);
 
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
@@ -102,10 +103,10 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there are no photos in the Photos table with cameraID equal to theCameraID
     if (PQntuples(res) == 0)
     {
+        PQclear(res);
         sprintf(command,
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
-        // PQclear(res);
         res = PQexec(conn, command);
         // check if executing the command worked
         if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -123,6 +124,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
         printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
     }
+    PQclear(res);
 
     PQexec(conn, "COMMIT;");
     // check if executing the command worked
@@ -271,7 +273,7 @@ int main(int argc, char **argv)
     }
     else if (result != 0)
     {
-        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
         bad_exit(conn);
     }
 
@@ -284,7 +286,7 @@ int main(int argc, char **argv)
     }
     else if (result != 0)
     {
-        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
         bad_exit(conn);
     }
 
@@ -297,7 +299,7 @@ int main(int argc, char **argv)
     }
     else if (result != 0)
     {
-        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
         bad_exit(conn);
     }
 
@@ -310,7 +312,7 @@ int main(int argc, char **argv)
     }
     else if (result != 0)
     {
-        printf("Error in printCameraPhotoCount function. Bad value returned: %d\n", result);
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
         bad_exit(conn);
     }
 
@@ -337,7 +339,7 @@ int main(int argc, char **argv)
 
     else
     {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        printf("Error in openAllExits function for input: %d. Bad value returned: %d\n", highwayNum, result);
         bad_exit(conn);
     }
 
@@ -356,7 +358,7 @@ int main(int argc, char **argv)
 
     else
     {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        printf("Error in openAllExits function for input: %d. Bad value returned: %d\n", highwayNum, result);
         bad_exit(conn);
     }
 
@@ -375,7 +377,7 @@ int main(int argc, char **argv)
 
     else
     {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        printf("Error in openAllExits function for input: %d. Bad value returned: %d\n", highwayNum, result);
         bad_exit(conn);
     }
 
@@ -394,7 +396,7 @@ int main(int argc, char **argv)
 
     else
     {
-        printf("Error in openAllExits function. Bad value returned: %d\n", result);
+        printf("Error in openAllExits function for input: %d. Bad value returned: %d\n", highwayNum, result);
         bad_exit(conn);
     }
 
@@ -412,7 +414,7 @@ int main(int argc, char **argv)
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        printf("Error in determineSpeedingViolationsAndFines function for input: %d. Bad value returned: %d\n", maxFineTotal, result);
         bad_exit(conn);
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
@@ -422,7 +424,7 @@ int main(int argc, char **argv)
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        printf("Error in determineSpeedingViolationsAndFines function for input: %d. Bad value returned: %d\n", maxFineTotal, result);
         bad_exit(conn);
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
@@ -432,7 +434,7 @@ int main(int argc, char **argv)
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        printf("Error in determineSpeedingViolationsAndFines function for input: %d. Bad value returned: %d\n", maxFineTotal, result);
         bad_exit(conn);
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
@@ -442,7 +444,7 @@ int main(int argc, char **argv)
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
     {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+        printf("Error in determineSpeedingViolationsAndFines function for input: %d. Bad value returned: %d\n", maxFineTotal, result);
         bad_exit(conn);
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);

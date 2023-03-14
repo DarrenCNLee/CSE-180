@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION 
-determineSpeedingViolationsAndFinesFunction(maxFineTotal INTEGER)
+determineSpeedingViolationsAndFinesFunction(IN maxFineTotal INTEGER)
 RETURNS INTEGER AS $$
 
     DECLARE
