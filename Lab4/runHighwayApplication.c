@@ -290,58 +290,58 @@ int main(int argc, char **argv)
      * printing error message if there's an error.
      */
 
-    // int cameraID;
-    // // test camera with id 951
-    // cameraID = 951;
-    // result = printCameraPhotoCount(conn, cameraID);
-    // if (result == -1)
-    // {
-    //     printf("No camera exists whose id is %d\n", cameraID);
-    // }
-    // else if (result != 0)
-    // {
-    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-    //     bad_exit(conn);
-    // }
+    int cameraID;
+    // test camera with id 951
+    cameraID = 951;
+    result = printCameraPhotoCount(conn, cameraID);
+    if (result == -1)
+    {
+        printf("No camera exists whose id is %d\n", cameraID);
+    }
+    else if (result != 0)
+    {
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+        bad_exit(conn);
+    }
 
-    // // test camera with id 960
-    // cameraID = 960;
-    // result = printCameraPhotoCount(conn, cameraID);
-    // if (result == -1)
-    // {
-    //     printf("No camera exists whose id is %d\n", cameraID);
-    // }
-    // else if (result != 0)
-    // {
-    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-    //     bad_exit(conn);
-    // }
+    // test camera with id 960
+    cameraID = 960;
+    result = printCameraPhotoCount(conn, cameraID);
+    if (result == -1)
+    {
+        printf("No camera exists whose id is %d\n", cameraID);
+    }
+    else if (result != 0)
+    {
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+        bad_exit(conn);
+    }
 
-    // // test camera with id 856
-    // cameraID = 856;
-    // result = printCameraPhotoCount(conn, cameraID);
-    // if (result == -1)
-    // {
-    //     printf("No camera exists whose id is %d\n", cameraID);
-    // }
-    // else if (result != 0)
-    // {
-    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-    //     bad_exit(conn);
-    // }
+    // test camera with id 856
+    cameraID = 856;
+    result = printCameraPhotoCount(conn, cameraID);
+    if (result == -1)
+    {
+        printf("No camera exists whose id is %d\n", cameraID);
+    }
+    else if (result != 0)
+    {
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+        bad_exit(conn);
+    }
 
-    // // test camera with id 905
-    // cameraID = 904;
-    // result = printCameraPhotoCount(conn, cameraID);
-    // if (result == -1)
-    // {
-    //     printf("No camera exists whose id is %d\n", cameraID);
-    // }
-    // else if (result != 0)
-    // {
-    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-    //     bad_exit(conn);
-    // }
+    // test camera with id 905
+    cameraID = 904;
+    result = printCameraPhotoCount(conn, cameraID);
+    if (result == -1)
+    {
+        printf("No camera exists whose id is %d\n", cameraID);
+    }
+    else if (result != 0)
+    {
+        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+        bad_exit(conn);
+    }
 
     /* Extra newline for readability */
     printf("\n");
