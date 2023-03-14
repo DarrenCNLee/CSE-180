@@ -454,7 +454,7 @@ int main(int argc, char **argv)
 
 
 
-
+    printf("\n");
     maxFineTotal = 720;
     result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
     if (result < 0)
@@ -464,41 +464,41 @@ int main(int argc, char **argv)
     }
     printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    maxFineTotal = 725;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // maxFineTotal = 725;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    maxFineTotal = 512;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // maxFineTotal = 512;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    maxFineTotal = 65;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // maxFineTotal = 65;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
-    maxFineTotal = 8;
-    result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    if (result < 0)
-    {
-        printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-        bad_exit(conn);
-    }
-    printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    // maxFineTotal = 8;
+    // result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    // if (result < 0)
+    // {
+    //     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    //     bad_exit(conn);
+    // }
+    // printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
 
 
 
