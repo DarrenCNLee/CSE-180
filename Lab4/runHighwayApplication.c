@@ -109,6 +109,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
                 theCameraID);
         PQclear(res);
         res = PQexec(conn, command);
+        // the camera has taken 0 photos
         printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
     }
 
