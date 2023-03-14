@@ -59,21 +59,20 @@ static void bad_exit(PGconn *conn)
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
-    PQclear(transact);
+    // PQclear(transact);
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
 
     PGresult *res = PQexec(conn, doesCameraExist);
-    PQclear(res);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
-        PGresult *rollback = PQexec(conn, "ROLLBACK");
-        // PQclear(transact);
-        PQclear(rollback);
+        // PGresult *rollback = PQexec(conn, "ROLLBACK");
+        // // PQclear(transact);
+        // PQclear(rollback);
         PQclear(res);
         bad_exit(conn);
     }
@@ -81,8 +80,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
-        PGresult *commit = PQexec(conn, "COMMIT;");
-        PQclear(commit);
+        // PGresult *commit = PQexec(conn, "COMMIT;");
+        // PQclear(commit);
         // PQclear(transact);
         PQclear(res);
         return -1;
@@ -97,13 +96,12 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
     // PQclear(res);
     res = PQexec(conn, command);
-    PQclear(res);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
-        PGresult *rollback = PQexec(conn, "ROLLBACK");
-        PQclear(rollback);
+        // PGresult *rollback = PQexec(conn, "ROLLBACK");
+        // PQclear(rollback);
         // PQclear(transact);
         PQclear(res);
         bad_exit(conn);
@@ -122,8 +120,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         // check if executing the command worked
         if (PQresultStatus(res) != PGRES_TUPLES_OK)
         {
-            PGresult *rollback = PQexec(conn, "ROLLBACK");
-            PQclear(rollback);
+            // PGresult *rollback = PQexec(conn, "ROLLBACK");
+            // PQclear(rollback);
             // PQclear(transact);
             PQclear(res);
             bad_exit(conn);
