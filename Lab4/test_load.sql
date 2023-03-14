@@ -134,3 +134,54 @@ COPY Photos FROM stdin USING DELIMITERS '|';
 951|CA|5TMM333|2022-12-14 08:25:22
 969|CA|5TMM333|2022-12-14 08:44:11
 \.
+
+
+
+
+
+
+    -- printf("\n");
+    -- maxFineTotal = 720;
+    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    -- if (result < 0)
+    -- {
+    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    --     bad_exit(conn);
+    -- }
+    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    -- maxFineTotal = 725;
+    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    -- if (result < 0)
+    -- {
+    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    --     bad_exit(conn);
+    -- }
+    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    -- maxFineTotal = 512;
+    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    -- if (result < 0)
+    -- {
+    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    --     bad_exit(conn);
+    -- }
+    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    -- maxFineTotal = 65;
+    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    -- if (result < 0)
+    -- {
+    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    --     bad_exit(conn);
+    -- }
+    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+
+    -- maxFineTotal = 8;
+    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
+    -- if (result < 0)
+    -- {
+    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
+    --     bad_exit(conn);
+    -- }
+    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
