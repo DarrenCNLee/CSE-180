@@ -362,7 +362,7 @@ int main(int argc, char **argv)
     printf("\n");
     testDetermineSpeedingViolationsAndFines(conn, 720);
     testDetermineSpeedingViolationsAndFines(conn, 725);
-    // testDetermineSpeedingViolationsAndFines(conn, 512);
+    testDetermineSpeedingViolationsAndFines(conn, 512);
     // testDetermineSpeedingViolationsAndFines(conn, 65);
     // testDetermineSpeedingViolationsAndFines(conn, 8);
 
