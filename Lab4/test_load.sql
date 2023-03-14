@@ -23,7 +23,6 @@ COPY Exits FROM stdin USING DELIMITERS '|';
 17|34|Mos Eisley|4.5|Portland|OR|TRUE
 1|95|Jundland Wastes|146.7|Tattooine|OR|FALSE
 1|2000|Jundland Wastes|146.7|Tattooine|OR|NULL
-
 \.
 
 -- Interchanges(highwayNum1, exitNum1, highwayNum2, exitNum2)
