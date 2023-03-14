@@ -133,6 +133,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     }
 
     PQclear(res);
+    PQfinish(conn);
     return 0;
 }
 
