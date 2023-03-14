@@ -85,7 +85,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         PQclear(res);
         return -1;
     }
-    // PQclear(res);
 
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
@@ -93,7 +92,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
             theCameraID);
 
-    // PQclear(res);
     PGresult *res2 = PQexec(conn, command);
 
     // check if executing the command worked
@@ -110,7 +108,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there are no photos in the Photos table with cameraID equal to theCameraID
     if (PQntuples(res2) == 0)
     {
-        // PQclear(res);
 
         // command to get the highwayNum and mileMarker for the camera with theCameraID
         sprintf(command,
@@ -130,28 +127,17 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             bad_exit(conn);
         }
         // the camera has taken 0 photos
-        printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
+        printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res3, 0, 0), PQgetvalue(res3, 0, 1));
         PQclear(res3);
     }
 
     else
     {
         // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
-        printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
+        printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res2, 0, 0), PQgetvalue(res2, 0, 1), PQgetvalue(res2, 0, 2));
     }
-    // PQclear(res);
 
     PGresult *commit = PQexec(conn, "COMMIT;");
-    // PQclear(commit);
-
-    // check if executing the command worked
-    // if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    // {
-    //     PQclear(res);
-    //     PQclear(commit);
-    //     PQclear(transact);
-    //     bad_exit(conn);
-    // }
 
     PQclear(res);
     PQclear(res2);
