@@ -85,7 +85,6 @@ CA|1WES905|WA|B385226|2007|RE
 CA|5PQR564|NJ|N179244|2023|RE
 CA|5TMM623|WA|K569201|2006|RE
 CA|5TMM333|OR|P622557|2006|RE
-
 \.
 
 -- Photos(cameraID, vehicleState, vehicleLicensePlate, photoTimestamp)
