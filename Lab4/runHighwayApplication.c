@@ -94,7 +94,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             theCameraID);
 
     // PQclear(res);
-    PGResult *res2 = PQexec(conn, command);
+    PGresult *res2 = PQexec(conn, command);
 
     // check if executing the command worked
     if (PQresultStatus(res2) != PGRES_TUPLES_OK)
