@@ -115,7 +115,6 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
         res = PQexec(conn, command);
-        PQclear(res);
 
         // check if executing the command worked
         if (PQresultStatus(res) != PGRES_TUPLES_OK)
