@@ -59,7 +59,6 @@ static void bad_exit(PGconn *conn)
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
-    // PQclear(transact);
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
@@ -70,9 +69,9 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
-        // PGresult *rollback = PQexec(conn, "ROLLBACK");
-        // // PQclear(transact);
-        // PQclear(rollback);
+        PGresult *rollback = PQexec(conn, "ROLLBACK");
+        PQclear(transact);
+        PQclear(rollback);
         PQclear(res);
         bad_exit(conn);
     }
@@ -82,7 +81,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PGresult *commit = PQexec(conn, "COMMIT;");
         PQclear(commit);
-        // PQclear(transact);
+        PQclear(transact);
         PQclear(res);
         return -1;
     }
@@ -95,38 +94,44 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             theCameraID);
 
     // PQclear(res);
-    res = PQexec(conn, command);
+    PGResult *res2 = PQexec(conn, command);
 
     // check if executing the command worked
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    if (PQresultStatus(res2) != PGRES_TUPLES_OK)
     {
-        // PGresult *rollback = PQexec(conn, "ROLLBACK");
-        // PQclear(rollback);
-        // PQclear(transact);
+        PGresult *rollback = PQexec(conn, "ROLLBACK");
+        PQclear(rollback);
+        PQclear(transact);
         PQclear(res);
+        PQclear(res2);
         bad_exit(conn);
     }
 
     // if there are no photos in the Photos table with cameraID equal to theCameraID
-    if (PQntuples(res) == 0)
+    if (PQntuples(res2) == 0)
     {
         // PQclear(res);
+
+        // command to get the highwayNum and mileMarker for the camera with theCameraID
         sprintf(command,
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
-        res = PQexec(conn, command);
+        PGresult *res3 = PQexec(conn, command);
 
         // check if executing the command worked
-        if (PQresultStatus(res) != PGRES_TUPLES_OK)
+        if (PQresultStatus(res3) != PGRES_TUPLES_OK)
         {
-            // PGresult *rollback = PQexec(conn, "ROLLBACK");
-            // PQclear(rollback);
-            // PQclear(transact);
+            PGresult *rollback = PQexec(conn, "ROLLBACK");
+            PQclear(rollback);
+            PQclear(transact);
             PQclear(res);
+            PQclear(res2);
+            PQclear(res3);
             bad_exit(conn);
         }
         // the camera has taken 0 photos
         printf("Camera %d, on %s at %s has taken 0 photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1));
+        PQclear(res3);
     }
 
     else
@@ -137,20 +142,21 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // PQclear(res);
 
     PGresult *commit = PQexec(conn, "COMMIT;");
-    PQclear(commit);
+    // PQclear(commit);
 
     // check if executing the command worked
-    if (PQresultStatus(res) != PGRES_TUPLES_OK)
-    {
-        PQclear(res);
-        // PQclear(commit);
-        // PQclear(transact);
-        bad_exit(conn);
-    }
+    // if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    // {
+    //     PQclear(res);
+    //     PQclear(commit);
+    //     PQclear(transact);
+    //     bad_exit(conn);
+    // }
 
     PQclear(res);
-    // PQclear(transact);
-    // PQclear(commit);
+    PQclear(res2);
+    PQclear(transact);
+    PQclear(commit);
 
     return 0;
 }
