@@ -59,7 +59,6 @@ static void bad_exit(PGconn *conn)
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
-    PQclear(transact);
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
@@ -71,6 +70,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK");
+        PQclear(transact);
         PQclear(rollback);
         PQclear(res);
         bad_exit(conn);
@@ -81,10 +81,11 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PGresult *commit = PQexec(conn, "COMMIT;");
         PQclear(commit);
+        PQclear(transact);
         PQclear(res);
         return -1;
     }
-    PQclear(res);
+    // PQclear(res);
 
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
@@ -100,6 +101,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK");
         PQclear(rollback);
+        PQclear(transact);
         PQclear(res);
         bad_exit(conn);
     }
@@ -107,7 +109,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there are no photos in the Photos table with cameraID equal to theCameraID
     if (PQntuples(res) == 0)
     {
-        PQclear(res);
+        // PQclear(res);
         sprintf(command,
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
@@ -117,6 +119,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         {
             PGresult *rollback = PQexec(conn, "ROLLBACK");
             PQclear(rollback);
+            PQclear(transact);
             PQclear(res);
             bad_exit(conn);
         }
@@ -129,19 +132,23 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         // print the cameraID, highwayNum, and mileMarker for that camera and the number of photos for that camera
         printf("Camera %d, on %s at %s has taken %s photos.\n", theCameraID, PQgetvalue(res, 0, 0), PQgetvalue(res, 0, 1), PQgetvalue(res, 0, 2));
     }
-    PQclear(res);
+    // PQclear(res);
 
     PGresult *commit = PQexec(conn, "COMMIT;");
-    PQclear(commit);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
+        PQclear(commit);
+        PQclear(transact);
         bad_exit(conn);
     }
 
     PQclear(res);
+    PQclear(transact);
+    PQclear(commit);
+
     return 0;
 }
 
