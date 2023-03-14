@@ -139,49 +139,8 @@ COPY Photos FROM stdin USING DELIMITERS '|';
 
 
 
-
-    -- printf("\n");
-    -- maxFineTotal = 720;
-    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    -- if (result < 0)
-    -- {
-    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    --     bad_exit(conn);
-    -- }
-    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
-    -- maxFineTotal = 725;
-    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    -- if (result < 0)
-    -- {
-    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    --     bad_exit(conn);
-    -- }
-    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
-    -- maxFineTotal = 512;
-    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    -- if (result < 0)
-    -- {
-    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    --     bad_exit(conn);
-    -- }
-    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
-    -- maxFineTotal = 65;
-    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    -- if (result < 0)
-    -- {
-    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    --     bad_exit(conn);
-    -- }
-    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
-
-    -- maxFineTotal = 8;
-    -- result = determineSpeedingViolationsAndFines(conn, maxFineTotal);
-    -- if (result < 0)
-    -- {
-    --     printf("Error in determineSpeedingViolationsAndFines function. Bad value returned: %d\n", result);
-    --     bad_exit(conn);
-    -- }
-    -- printf("Total fines for maxFineTotal %d is %d\n", maxFineTotal, result);
+    -- testDetermineSpeedingViolationsAndFines(conn, 720);
+    -- testDetermineSpeedingViolationsAndFines(conn, 725);
+    -- testDetermineSpeedingViolationsAndFines(conn, 512);
+    -- testDetermineSpeedingViolationsAndFines(conn, 65);
+    -- testDetermineSpeedingViolationsAndFines(conn, 8);
