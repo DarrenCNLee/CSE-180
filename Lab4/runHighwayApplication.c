@@ -59,6 +59,7 @@ static void bad_exit(PGconn *conn)
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+    PQclear(transact);
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
@@ -70,7 +71,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK");
-        PQclear(transact);
+        // PQclear(transact);
         PQclear(rollback);
         PQclear(res);
         bad_exit(conn);
@@ -81,7 +82,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PGresult *commit = PQexec(conn, "COMMIT;");
         PQclear(commit);
-        PQclear(transact);
+        // PQclear(transact);
         PQclear(res);
         return -1;
     }
@@ -101,7 +102,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK");
         PQclear(rollback);
-        PQclear(transact);
+        // PQclear(transact);
         PQclear(res);
         bad_exit(conn);
     }
@@ -119,7 +120,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
         {
             PGresult *rollback = PQexec(conn, "ROLLBACK");
             PQclear(rollback);
-            PQclear(transact);
+            // PQclear(transact);
             PQclear(res);
             bad_exit(conn);
         }
@@ -135,19 +136,20 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // PQclear(res);
 
     PGresult *commit = PQexec(conn, "COMMIT;");
+    PQclear(commit);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PQclear(res);
-        PQclear(commit);
-        PQclear(transact);
+        // PQclear(commit);
+        // PQclear(transact);
         bad_exit(conn);
     }
 
     PQclear(res);
-    PQclear(transact);
-    PQclear(commit);
+    // PQclear(transact);
+    // PQclear(commit);
 
     return 0;
 }
