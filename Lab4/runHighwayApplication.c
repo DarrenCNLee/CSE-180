@@ -66,6 +66,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
 
     PGresult *res = PQexec(conn, doesCameraExist);
+    PQclear(res);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -96,6 +97,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
     // PQclear(res);
     res = PQexec(conn, command);
+    PQclear(res);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
@@ -115,6 +117,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
                 "SELECT c.highwayNum, c.mileMarker FROM Cameras c WHERE c.cameraID = %d ;",
                 theCameraID);
         res = PQexec(conn, command);
+        PQclear(res);
+
         // check if executing the command worked
         if (PQresultStatus(res) != PGRES_TUPLES_OK)
         {
