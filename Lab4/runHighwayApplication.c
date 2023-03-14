@@ -16,8 +16,6 @@
 /* Maximum length of string version of integer; you don't have to use a value this big */
 #define MAXNUMBERSTRINGSIZE 20
 
-int debug = 1;
-
 /* Exit with success after closing connection to the server
  *  and freeing memory that was used by the PGconn object.
  */
