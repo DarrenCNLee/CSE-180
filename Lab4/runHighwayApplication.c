@@ -79,7 +79,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
-        PQexec(conn, "COMMIT;");
+        PGresult *commit = PQexec(conn, "COMMIT;");
+        PQclear(commit);
         PQclear(res);
         return -1;
     }
