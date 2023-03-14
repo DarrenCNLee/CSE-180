@@ -17,6 +17,7 @@ RETURNS INTEGER AS $$
             SELECT o.ownerState, o.ownerLicenseID, COUNT(*)
             FROM Owners o, DistancesAndIntervalsForPhotos d, Highways h, Vehicles v 
             WHERE d.vehicleLicensePlate = v.vehicleLicensePlate 
+                AND d.vehicleState = v.vehicleState
                 AND v.ownerState = o.ownerState 
                 AND v.ownerLicenseID = o.ownerLicenseID 
                 AND d.highwayNum = h.highwayNum 
