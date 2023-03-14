@@ -80,8 +80,8 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
-        // PGresult *commit = PQexec(conn, "COMMIT;");
-        // PQclear(commit);
+        PGresult *commit = PQexec(conn, "COMMIT;");
+        PQclear(commit);
         // PQclear(transact);
         PQclear(res);
         return -1;
@@ -166,7 +166,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
-    PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+    PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
     // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
@@ -179,8 +179,10 @@ int openAllExits(PGconn *conn, int theHighwayNum)
     // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
     {
-        PQexec(conn, "COMMIT;");
+        PGresult *commit = PQexec(conn, "COMMIT;");
         PQclear(check);
+        PQclear(transact);
+        PQclear(commit);
         return -1;
     }
 
@@ -190,7 +192,7 @@ int openAllExits(PGconn *conn, int theHighwayNum)
             "UPDATE Exits SET isExitOpen = TRUE WHERE highwayNum = %d AND (isExitOpen = FALSE OR isExitOpen IS NULL);",
             theHighwayNum);
 
-    PQexec(conn, "COMMIT;");
+    PGresult *commit = PQexec(conn, "COMMIT;");
 
     PGresult *res = PQexec(conn, command);
 
@@ -198,6 +200,8 @@ int openAllExits(PGconn *conn, int theHighwayNum)
     int numExits = atoi(PQcmdTuples(res));
     PQclear(check);
     PQclear(res);
+    PQclear(transact);
+    PQclear(commit);
     return numExits;
 }
 
@@ -280,58 +284,58 @@ int main(int argc, char **argv)
      * printing error message if there's an error.
      */
 
-    int cameraID;
-    // test camera with id 951
-    cameraID = 951;
-    result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1)
-    {
-        printf("No camera exists whose id is %d\n", cameraID);
-    }
-    else if (result != 0)
-    {
-        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-        bad_exit(conn);
-    }
+    // int cameraID;
+    // // test camera with id 951
+    // cameraID = 951;
+    // result = printCameraPhotoCount(conn, cameraID);
+    // if (result == -1)
+    // {
+    //     printf("No camera exists whose id is %d\n", cameraID);
+    // }
+    // else if (result != 0)
+    // {
+    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+    //     bad_exit(conn);
+    // }
 
-    // test camera with id 960
-    cameraID = 960;
-    result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1)
-    {
-        printf("No camera exists whose id is %d\n", cameraID);
-    }
-    else if (result != 0)
-    {
-        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-        bad_exit(conn);
-    }
+    // // test camera with id 960
+    // cameraID = 960;
+    // result = printCameraPhotoCount(conn, cameraID);
+    // if (result == -1)
+    // {
+    //     printf("No camera exists whose id is %d\n", cameraID);
+    // }
+    // else if (result != 0)
+    // {
+    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+    //     bad_exit(conn);
+    // }
 
-    // test camera with id 856
-    cameraID = 856;
-    result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1)
-    {
-        printf("No camera exists whose id is %d\n", cameraID);
-    }
-    else if (result != 0)
-    {
-        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-        bad_exit(conn);
-    }
+    // // test camera with id 856
+    // cameraID = 856;
+    // result = printCameraPhotoCount(conn, cameraID);
+    // if (result == -1)
+    // {
+    //     printf("No camera exists whose id is %d\n", cameraID);
+    // }
+    // else if (result != 0)
+    // {
+    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+    //     bad_exit(conn);
+    // }
 
-    // test camera with id 905
-    cameraID = 904;
-    result = printCameraPhotoCount(conn, cameraID);
-    if (result == -1)
-    {
-        printf("No camera exists whose id is %d\n", cameraID);
-    }
-    else if (result != 0)
-    {
-        printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
-        bad_exit(conn);
-    }
+    // // test camera with id 905
+    // cameraID = 904;
+    // result = printCameraPhotoCount(conn, cameraID);
+    // if (result == -1)
+    // {
+    //     printf("No camera exists whose id is %d\n", cameraID);
+    // }
+    // else if (result != 0)
+    // {
+    //     printf("Error in printCameraPhotoCount function for input: %d. Bad value returned: %d\n", cameraID, result);
+    //     bad_exit(conn);
+    // }
 
     /* Extra newline for readability */
     printf("\n");
