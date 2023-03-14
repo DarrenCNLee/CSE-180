@@ -348,7 +348,7 @@ int main(int argc, char **argv)
     testDetermineSpeedingViolationsAndFines(conn, 240);
 
     // test with maxFinetotal of 210
-    // testDetermineSpeedingViolationsAndFines(conn, 210);
+    testDetermineSpeedingViolationsAndFines(conn, 210);
 
     // test with maxFinetotal of 165
     // testDetermineSpeedingViolationsAndFines(conn, 165);
