@@ -48,6 +48,13 @@ RETURNS INTEGER AS $$
             -- or when we already have assessed maxFineTotal fines.
             EXIT WHEN NOT FOUND OR totalFines >= maxFineTotal; 
 
+            -- update the Owners table by setting the number of speeding violations 
+            UPDATE Owners
+            SET speedingViolations = numViolations
+            WHERE ownerState = theOwnerState 
+                AND ownerLicenseID = theOwnerLicenseID;
+
+
             IF numViolations >= 3 THEN curFines := 50 * numViolations; 
             ELSIF numViolations = 2 THEN curFines :=  40; 
             ELSIF numViolations = 1 THEN curFines := 10;
@@ -60,9 +67,9 @@ RETURNS INTEGER AS $$
             -- otherwise increase totalFines by the curFines
             totalFines := totalFines + curFines;
 
-            -- update the Owners table by setting the number of speeding violations and the fines
+            -- update the Owners table by setting the fines
             UPDATE Owners
-            SET speedingViolations = numViolations, fine = curFines
+            SET fine = curFines
             WHERE ownerState = theOwnerState 
                 AND ownerLicenseID = theOwnerLicenseID;
 
