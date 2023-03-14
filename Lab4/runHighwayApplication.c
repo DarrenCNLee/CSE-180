@@ -351,7 +351,7 @@ int main(int argc, char **argv)
     testDetermineSpeedingViolationsAndFines(conn, 210);
 
     // test with maxFinetotal of 165
-    // testDetermineSpeedingViolationsAndFines(conn, 165);
+    testDetermineSpeedingViolationsAndFines(conn, 165);
 
     good_exit(conn);
     return 0;
