@@ -69,14 +69,14 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
-    sprintf(doesCameraExist, "ELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
+    sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
 
     PGresult *res = PQexec(conn, doesCameraExist);
 
     // check if executing the command worked
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
-        PGresult *rollback = PQexec(conn, "ROLLBACK;");
+        PGresult *rollback = PQexec(conn, "OLLBACK;");
         if (PQresultStatus(rollback) != PGRES_COMMAND_OK)
         {
             printf("Rollback failed\n");
@@ -85,6 +85,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             PQclear(transact);
             bad_exit(conn);
         }
+        printf("SELECT statement failed\n");
         PQclear(transact);
         PQclear(rollback);
         PQclear(res);
