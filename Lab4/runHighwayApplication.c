@@ -58,7 +58,7 @@ static void bad_exit(PGconn *conn)
 
 int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
-    PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+    PGresult *transact = PQexec(conn, "EGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
     if (PQresultStatus(transact) != PGRES_COMMAND_OK)
     {
