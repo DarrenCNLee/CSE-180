@@ -95,7 +95,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // if there is no camera in the Cameras table with cameraID equal to theCameraID
     if (PQntuples(res) <= 0)
     {
-        PGresult *commit = PQexec(conn, "OMMIT;");
+        PGresult *commit = PQexec(conn, "COMMIT;");
         if (PQresultStatus(commit) != PGRES_COMMAND_OK)
         {
             printf("Commit failed\n");
@@ -113,7 +113,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command,
-            "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
+            "ELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
             theCameraID);
 
     PGresult *res2 = PQexec(conn, command);
@@ -131,6 +131,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
             PQclear(transact);
             bad_exit(conn);
         }
+        printf("SELECT statement failed\n");
         PQclear(rollback);
         PQclear(transact);
         PQclear(res);
