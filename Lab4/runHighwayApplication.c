@@ -60,6 +60,13 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
 
+    if (PQresultStatus(transact) != PGRES_COMMAND_OK)
+    {
+        printf("Transaction failed\n");
+        PQclear(transact);
+        bad_exit(conn);
+    }
+
     // command to check if a camera with the theCameraID exists
     char doesCameraExist[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(doesCameraExist, "SELECT * FROM Cameras WHERE cameraID = %d;", theCameraID);
@@ -70,6 +77,14 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK;");
+        if (PQresultStatus(rollback) != PGRES_COMMAND_OK)
+        {
+            printf("Rollback failed\n");
+            PQclear(rollback);
+            PQclear(res);
+            PQclear(transact);
+            bad_exit(conn);
+        }
         PQclear(transact);
         PQclear(rollback);
         PQclear(res);
@@ -80,6 +95,14 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQntuples(res) <= 0)
     {
         PGresult *commit = PQexec(conn, "COMMIT;");
+        if (PQresultStatus(commit) != PGRES_COMMAND_OK)
+        {
+            printf("Commit failed\n");
+            PQclear(commit);
+            PQclear(res);
+            PQclear(transact);
+            bad_exit(conn);
+        }
         PQclear(commit);
         PQclear(transact);
         PQclear(res);
@@ -98,6 +121,15 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     if (PQresultStatus(res2) != PGRES_TUPLES_OK)
     {
         PGresult *rollback = PQexec(conn, "ROLLBACK;");
+        if (PQresultStatus(rollback) != PGRES_COMMAND_OK)
+        {
+            printf("Rollback failed\n");
+            PQclear(rollback);
+            PQclear(res);
+            PQclear(res2);
+            PQclear(transact);
+            bad_exit(conn);
+        }
         PQclear(rollback);
         PQclear(transact);
         PQclear(res);
@@ -119,7 +151,16 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     }
 
     PGresult *commit = PQexec(conn, "COMMIT;");
-
+    if (PQresultStatus(commit) != PGRES_COMMAND_OK)
+    {
+        printf("Commit failed\n");
+        PQclear(commit);
+        PQclear(res);
+        PQclear(res2);
+        PQclear(commit);
+        PQclear(transact);
+        bad_exit(conn);
+    }
     PQclear(res);
     PQclear(res2);
     PQclear(transact);
@@ -149,10 +190,35 @@ int openAllExits(PGconn *conn, int theHighwayNum)
 
     PGresult *check = PQexec(conn, doesHighwayExist);
 
+    if (PQresultStatus(check) != PGRES_TUPLES_OK)
+    {
+        PGresult *rollback = PQexec(conn, "ROLLBACK;");
+        if (PQresultStatus(rollback) != PGRES_COMMAND_OK)
+        {
+            printf("Rollback failed\n");
+            PQclear(rollback);
+            PQclear(check);
+            PQclear(transact);
+            bad_exit(conn);
+        }
+        PQclear(transact);
+        PQclear(rollback);
+        PQclear(check);
+        bad_exit(conn);
+    }
+
     // if there is no highway with theHighwayNum, return -1
     if (PQntuples(check) <= 0)
     {
         PGresult *commit = PQexec(conn, "COMMIT;");
+        if (PQresultStatus(commit) != PGRES_COMMAND_OK)
+        {
+            printf("Commit failed\n");
+            PQclear(commit);
+            PQclear(check);
+            PQclear(transact);
+            bad_exit(conn);
+        }
         PQclear(check);
         PQclear(transact);
         PQclear(commit);
@@ -165,9 +231,26 @@ int openAllExits(PGconn *conn, int theHighwayNum)
             "UPDATE Exits SET isExitOpen = TRUE WHERE highwayNum = %d AND (isExitOpen = FALSE OR isExitOpen IS NULL);",
             theHighwayNum);
 
-    PGresult *commit = PQexec(conn, "COMMIT;");
-
     PGresult *res = PQexec(conn, command);
+    if (PQresultStatus(command) != PGRES_COMMAND_OK)
+    {
+        printf("Update failed\n");
+        PQclear(check);
+        PQclear(res);
+        PQclear(transact);
+        bad_exit(conn);
+    }
+
+    PGresult *commit = PQexec(conn, "COMMIT;");
+    if (PQresultStatus(commit) != PGRES_COMMAND_OK)
+    {
+        printf("Commit failed\n");
+        PQclear(commit);
+        PQclear(check);
+        PQclear(res);
+        PQclear(transact);
+        bad_exit(conn);
+    }
 
     // return the number of exits that were updated
     int numExits = atoi(PQcmdTuples(res));
