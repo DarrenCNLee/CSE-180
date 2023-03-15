@@ -232,7 +232,7 @@ int openAllExits(PGconn *conn, int theHighwayNum)
             theHighwayNum);
 
     PGresult *res = PQexec(conn, command);
-    if (PQresultStatus(command) != PGRES_COMMAND_OK)
+    if (PQresultStatus(res) != PGRES_COMMAND_OK)
     {
         printf("Update failed\n");
         PQclear(check);
