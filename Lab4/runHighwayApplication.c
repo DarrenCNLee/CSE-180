@@ -113,7 +113,7 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
     // command to select the highway numbers, milemarkers, and number of tuples for cameras with theCameraID
     char command[MAXSQLSTATEMENTSTRINGSIZE];
     sprintf(command,
-            "ELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
+            "SELECT c.highwayNum, c.mileMarker, COUNT(*) FROM Cameras c, Photos p WHERE c.cameraID = %d AND c.cameraID = p.cameraID GROUP BY c.highwayNum, c.mileMarker;",
             theCameraID);
 
     PGresult *res2 = PQexec(conn, command);
@@ -183,6 +183,12 @@ int printCameraPhotoCount(PGconn *conn, int theCameraID)
 int openAllExits(PGconn *conn, int theHighwayNum)
 {
     PGresult *transact = PQexec(conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE;");
+    if (PQresultStatus(transact) != PGRES_COMMAND_OK)
+    {
+        printf("Transaction failed\n");
+        PQclear(transact);
+        bad_exit(conn);
+    }
 
     // command to check if a highway exists with theHighwayNum
     char doesHighwayExist[MAXSQLSTATEMENTSTRINGSIZE];
@@ -296,6 +302,7 @@ int determineSpeedingViolationsAndFines(PGconn *conn, int maxFineTotal)
     // return a negative value if there was an error
     if (PQresultStatus(res) != PGRES_TUPLES_OK)
     {
+        printf("SELECT statement failed\n");
         PQclear(res);
         return -1;
     }
